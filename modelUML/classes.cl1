@@ -2,9 +2,9 @@
 
 model M
 
-enum Modele {
-    manuelle,
-    electrique
+enum Sexe {
+    homme,
+    femme
 }
 
 enum Etat {
@@ -12,9 +12,9 @@ enum Etat {
     hs
 }
 
-enum Sexe {
-    homme,
-    femme
+enum Modele {
+    manuel,
+    electrique
 }
 
 class Station
@@ -24,68 +24,68 @@ end
 
 class Bornette
     attributes
-        idBorne : Integer
-        etatBornette : Etat
+        idBornette : Integer
+        etat : Etat
 end
 
 class Velo
     attributes
         idVelo : Integer
-        modelVelo : Modele
-        etatVelo : Etat
-        dateMenS : String
+        modele : Modele
+        etat : Etat
+        dateMeS : String
 end
 
 class Location
     attributes
-        numCB : Integer
         idVelo : Integer
+        idAbonnement : Integer
+        noCB : Integer
+        codeSecret : Integer
         debut : String
         fin : String
-        codeSecret : Integer
 end
 
-class Abonne < Client
+class Abonnement
     attributes
-        dataNaissance : String
+        idAbonnement : Integer
+        nom : String
+        prenom : String
+        dateNaissance : String
         sexe : Sexe
         dateAbonnement : String
         codeSecret : Integer
-end
-
-class Client
-    attributes
-        numCB : Integer
+        noCB : Integer
 end
 
 class Trajet
     attributes
         stationDepart : Station
-        stationArrivee : Station
+        stationArrive : Station
 end
 
-association SeCompose
+association SeComposeDe
     between
         Station[1] role station
-        Bornette[*] role bornettes
+        Bornette[1..*] role bornettes
 end
 
-association EstAssocie
+association EstAssocieA
     between
-        Bornette[0..1] role borne
-        Velo[0..1] role velo
+        Velo[1] role velo
+        Bornette[1] role bornette
 end
 
-association EstLoueDans
+association EstPourLocation
     between
         Velo[1] role velo
         Location[*] role locations
 end
 
-association EstLouePar
+association EstAbonnee
     between
         Location[*] role locations
-        Client[1] role client
+        Abonnement[0..1] role abonnement
 end
 
 association ARealise
