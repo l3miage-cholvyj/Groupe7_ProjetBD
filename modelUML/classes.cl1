@@ -1,0 +1,96 @@
+-- THIS FILE IS GENERATED. DON'T TOUCH IT!!!
+
+model M
+
+enum Modele {
+    manuelle,
+    electrique
+}
+
+enum Etat {
+    ok,
+    hs
+}
+
+enum Sexe {
+    homme,
+    femme
+}
+
+class Station
+    attributes
+        adresse : String
+end
+
+class Bornette
+    attributes
+        idBorne : Integer
+        etatBornette : Etat
+end
+
+class Velo
+    attributes
+        idVelo : Integer
+        modelVelo : Modele
+        etatVelo : Etat
+        dateMenS : String
+end
+
+class Location
+    attributes
+        numCB : Integer
+        idVelo : Integer
+        debut : String
+        fin : String
+        codeSecret : Integer
+end
+
+class Abonne < Client
+    attributes
+        dataNaissance : String
+        sexe : Sexe
+        dateAbonnement : String
+        codeSecret : Integer
+end
+
+class Client
+    attributes
+        numCB : Integer
+end
+
+class Trajet
+    attributes
+        stationDepart : Station
+        stationArrivee : Station
+end
+
+association SeCompose
+    between
+        Station[1] role station
+        Bornette[*] role bornettes
+end
+
+association EstAssocie
+    between
+        Bornette[0..1] role borne
+        Velo[0..1] role velo
+end
+
+association EstLoueDans
+    between
+        Velo[1] role velo
+        Location[*] role locations
+end
+
+association EstLouePar
+    between
+        Location[*] role locations
+        Client[1] role client
+end
+
+association ARealise
+    between
+        Location[1] role location
+        Trajet[1] role trajet
+end
+
