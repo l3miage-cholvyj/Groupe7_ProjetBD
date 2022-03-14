@@ -1,5 +1,10 @@
 package uga.groupe7.bd.model;
 
-public class Velo {
+import java.sql.Date;
 
+public class Velo {
+	private int idVelo;
+	private Model modelVelo ;
+	private Etat etatVelo ;
+	private Date dateMenS ;
 }
