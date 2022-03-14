@@ -2483,6 +2483,25 @@
 									"subViews": [
 										{
 											"_type": "UMLAttributeView",
+											"_id": "AAAAAAF/iUHQnNE48iM=",
+											"_parent": {
+												"$ref": "AAAAAAF/b8O2xvu1K3w="
+											},
+											"model": {
+												"$ref": "AAAAAAF/iUHQhtE1AYg="
+											},
+											"lineColor": "#450f0f",
+											"fillColor": "#f6ec9f",
+											"font": "Arial;13;0",
+											"left": 557,
+											"top": 526,
+											"width": 127.18798828125,
+											"height": 13,
+											"text": "idVelo: Integer",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
 											"_id": "AAAAAAF/b8RAi/wBVbU=",
 											"_parent": {
 												"$ref": "AAAAAAF/b8O2xvu1K3w="
@@ -2494,7 +2513,7 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 557,
-											"top": 526,
+											"top": 541,
 											"width": 127.18798828125,
 											"height": 13,
 											"text": "stationDepart: Station",
@@ -2513,7 +2532,7 @@
 											"fillColor": "#f6ec9f",
 											"font": "Arial;13;0",
 											"left": 557,
-											"top": 541,
+											"top": 556,
 											"width": 127.18798828125,
 											"height": 13,
 											"text": "stationArrivee: Station",
@@ -2526,7 +2545,7 @@
 									"left": 552,
 									"top": 521,
 									"width": 137.18798828125,
-									"height": 38
+									"height": 53
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -5215,6 +5234,15 @@
 					},
 					"name": "Trajet",
 					"attributes": [
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAF/iUHQhtE1AYg=",
+							"_parent": {
+								"$ref": "AAAAAAF/b8O2w/utBR4="
+							},
+							"name": "idVelo",
+							"type": "Integer"
+						},
 						{
 							"_type": "UMLAttribute",
 							"_id": "AAAAAAF/b8RAZ/v7jEs=",
