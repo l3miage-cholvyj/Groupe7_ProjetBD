@@ -9,21 +9,55 @@ import java.sql.SQLException;
 import javax.persistence.Persistence;
 
 
-public class App 
-{
-    public static void main( String[] args )
+/*
+Teste commande
+java.sql.Statement testeSql = con.createStatement();
+java.sql.ResultSet resultatTestSql = testeSql.executeQuery("SELECT * FROM utilisateur");
+          	  	
+while (resultatTestSql.next()) {
+System.out.println("id: " + resultatTestSql.getInt("id"));
+System.out.println("nom: " + resultatTestSql.getString("nom"));
+System.out.println("prenom: " + resultatTestSql.getString("prenom"));
+}
+*/
+
+public class App {
+
+	public static Connection ConnectionBD(String url,String user,String password) {
+		try {
+	    	Connection con = DriverManager.getConnection(url,user,password);
+	    	System.out.println( "Connextion Succes" );
+	    	return con;
+		}
+	    catch (SQLException e) {
+	    	System.out.println( "Connextion Fail" );
+	    	e.printStackTrace();
+	    	return null;
+	    }
+	}
+
+    public static void main( String[] args ) throws SQLException
     {
-        System.out.println( "Luncher groupe 7 data base" );
-    
-        String url = "jdbc:mysql://localhost:3306/veli";
-        String userName = "root";
-        String password = "";
+        //Variable
+    	Connection con;
+    	
+    	System.out.println( "Luncher groupe 7 data base" );
         
-        try {
-        	Connection con = DriverManager.getConnection(url,userName,password);
-        	System.out.println( "Connextion Succes" );
-        	/*Teste commande*/
-        	java.sql.Statement testeSql = con.createStatement();
+        //----Etablie la connexion avec la base de donnee----
+    	
+    	//Lance la connextion vers la base de donnee
+    	con =  ConnectionBD("jdbc:mysql://localhost:3306/veli","root",""); //Configuration Jordan
+    	
+    	//Connextion BD avec d'autres identifiants
+    	if (con == null) {
+    		con = ConnectionBD("","",""); // Entree parametre ici 
+    	}
+    	
+    	if (con != null) {
+    		
+    		//--- Essais de commande sql
+    		/*
+    		java.sql.Statement testeSql = con.createStatement();
       	  	java.sql.ResultSet resultatTestSql = testeSql.executeQuery("SELECT * FROM utilisateur");
       	  	
         	while (resultatTestSql.next()) {
@@ -31,10 +65,16 @@ public class App
         		System.out.println("nom: " + resultatTestSql.getString("nom"));
         		System.out.println("prenom: " + resultatTestSql.getString("prenom"));
         	}
-        }
-        catch (SQLException e) {
-        	System.out.println( "Connextion Fail" );
-        	e.printStackTrace();
-        }
+        	*/
+        	
+        	//--- Interface Textuelle ---
+        	Interface.Interface(0);
+        	//---
+        	
+    	}
+    	else {
+    		System.out.println( "---FIN PROGRAMME---" ); // Si echec de la connection a la bd
+    	}
+    	
     }
 }
