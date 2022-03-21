@@ -6,18 +6,34 @@ public class Station {
 
 	Interface inter;//Permet d'accer au fonction de l'interface
 	
-	/*Recherche dans la base de donne toutes les sations
-	 *VPlus et les affiches
-	*/
-	public void ShowSationsVPlus() {
-		// TODO
-	}
-	
-	/*Recherche dans la base de donne toutes les sations
-	 *VMoins et les affiches
-	*/
-	public void ShowSationsVMoins() {
-		// TODO
+	private String adresse;
+	private Status status;
+
+	//constructeurs
+	public Station(String adresse){
+		this.adresse = adresse;
+		this.status = Status.VNul;
 	}
 
+	public Station(String adresse, Status status){
+		this.adresse = adresse;
+		this.status = status;
+	}
+
+	//getters et setters
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 }
