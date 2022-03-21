@@ -1,10 +1,19 @@
--- THIS FILE IS GENERATED. DON'T TOUCH IT!!!
-
 model M
+
+enum Modele {
+    manuel(2),
+    electrique(3)
+}
 
 enum Sexe {
     homme,
     femme
+}
+
+enum Status {
+    vPlus,
+    vNul,
+    vMoins
 }
 
 enum Etat {
@@ -12,85 +21,83 @@ enum Etat {
     hs
 }
 
-enum Modele {
-    manuel,
-    electrique
-}
-
 class Station
     attributes
         adresse : String
+        status : Status
 end
 
 class Bornette
     attributes
-        idBornette : Integer
-        etat : Etat
+        idBorne : Integer
+        etatBornette : Etat
 end
 
 class Velo
     attributes
         idVelo : Integer
-        modele : Modele
-        etat : Etat
-        dateMeS : String
+        modeleVelo : Modele
+        etatVelo : Etat
+        dateMenS : Date
 end
 
 class Location
     attributes
-        idVelo : Integer
-        idAbonnement : Integer
-        noCB : Integer
+        numCB : Interger
+        prix : Interger
+        debut : DateTime
+        fin : DateTime
         codeSecret : Integer
-        debut : String
-        fin : String
-end
-
-class Abonnement
-    attributes
-        idAbonnement : Integer
-        nom : String
-        prenom : String
-        dateNaissance : String
-        sexe : Sexe
-        dateAbonnement : String
-        codeSecret : Integer
-        noCB : Integer
 end
 
 class Trajet
     attributes
         stationDepart : Station
-        stationArrive : Station
+        stationArrivee : Station
 end
 
-association SeComposeDe
+class Client
+    attributes
+        numCB : Integer
+end
+
+class Abonne < Client
+    attributes
+        nom : String
+        prenom : String
+        dataNaissance : Date
+        sexe : Sexe
+        dateAbonnement : Date
+        codeSecret : Integer
+end
+
+association SeCompose
     between
         Station[1] role station
-        Bornette[1..*] role bornettes
+        Bornette[*] role bornettes
 end
 
-association EstAssocieA
+association EstAssocie
     between
-        Velo[1] role velo
-        Bornette[1] role bornette
+        Bornette[0..1] role borne
+        Velo[0..1] role velo
 end
 
-association EstPourLocation
+association EstLoueDans
     between
-        Velo[1] role velo
+        Velo[*] role velos
         Location[*] role locations
 end
 
-association EstAbonnee
+association EstLouePar
     between
         Location[*] role locations
-        Abonnement[0..1] role abonnement
+        Client[1] role client
 end
 
 association ARealise
     between
         Location[1] role location
-        Trajet[1] role trajet
+        Trajet[*] role trajets
 end
 
