@@ -5,6 +5,10 @@ public class Abonne {
 	
 	Interface inter;//Permet d'accer au fonction de l'interface
 
+	public Abonne(String nomAbonne, String codeSecretAbonne) {
+		// TODO Auto-generated constructor stub
+	}
+
 	/*Crée une nouvelle instance d'abonne et la retourne
 	* Inscrit cette instance dans la base de donnée
 	*/
@@ -75,6 +79,47 @@ public class Abonne {
 	 */
 	public void newLocation(String codeSecret) {
 		// TODO
+	}
+
+	/*Interoge dans la base de donnèe
+	 * le nombre de location en cours
+	 *de l'abonné
+	 */ 
+	public int nbLocation() {
+		// TODO
+		return 0;
+	}
+
+	/*Interoge la base de donnèe pour savoir
+	 *  si le le code secret et celui d'un abonné 
+	 * annonyme
+	 */
+	public boolean verifCode(int demandeCodeSecret) {
+		// TODO
+		return false;
+	}
+
+	/*
+	 * Interoge la base et affiche la liste des locations
+	 * de l'abonne courant
+	 */
+	public void afficheLocation() {
+		// TODO
+		
+	}
+
+	/*
+	 * Retourne le nombre de velo
+	 * loué par l'abonné sur la location
+	 * 	 */
+	public int getNbVelo(Location location) {
+		// TODO
+		return 0;
+	}
+
+	public Location getLocation(int indexChoix) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

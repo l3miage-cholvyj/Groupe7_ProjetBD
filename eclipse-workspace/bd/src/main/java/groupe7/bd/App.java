@@ -10,7 +10,7 @@ import javax.persistence.Persistence;
 
 
 /*
-Teste commande
+Test commande
 java.sql.Statement testeSql = con.createStatement();
 java.sql.ResultSet resultatTestSql = testeSql.executeQuery("SELECT * FROM utilisateur");
           	  	
@@ -26,11 +26,11 @@ public class App {
 	public static Connection ConnectionBD(String url,String user,String password) {
 		try {
 	    	Connection con = DriverManager.getConnection(url,user,password);
-	    	System.out.println( "Connextion Succes" );
+	    	System.out.println( "Connexion Succes" );
 	    	return con;
 		}
 	    catch (SQLException e) {
-	    	System.out.println( "Connextion Fail" );
+	    	System.out.println( "Connexion Fail" );
 	    	e.printStackTrace();
 	    	return null;
 	    }
@@ -41,16 +41,16 @@ public class App {
         //Variable
     	Connection con;
     	
-    	System.out.println( "Luncher groupe 7 data base" );
+    	System.out.println( "Launcher groupe 7 database" );
         
-        //----Etablie la connexion avec la base de donnee----
+        //----Etabli la connexion avec la base de données----
     	
-    	//Lance la connextion vers la base de donnee
+    	//Lance la connexion vers la base de données
     	con =  ConnectionBD("jdbc:mysql://localhost:3306/veli","root",""); //Configuration Jordan
     	
-    	//Connextion BD avec d'autres identifiants
+    	//Connexion BD avec d'autres identifiants
     	if (con == null) {
-    		con = ConnectionBD("","",""); // Entree parametre ici 
+    		con = ConnectionBD("jdbc:mysql://localhost:3306/veli","root","Nenany15"); // Configuration Thierno
     	}
     	
     	if (con != null) {
@@ -58,10 +58,10 @@ public class App {
     		//--- Essais de commande sql
     		/*
     		java.sql.Statement testeSql = con.createStatement();
-      	  	java.sql.ResultSet resultatTestSql = testeSql.executeQuery("SELECT * FROM utilisateur");
+      	  	java.sql.ResultSet resultatTestSql = testeSql.executeQuery("SELECT * FROM utilisateur WHERE (nom='Khoi')");
       	  	
         	while (resultatTestSql.next()) {
-        		System.out.println("id: " + resultatTestSql.getInt("id"));
+        		System.out.println("N°: " + resultatTestSql.getInt("id"));
         		System.out.println("nom: " + resultatTestSql.getString("nom"));
         		System.out.println("prenom: " + resultatTestSql.getString("prenom"));
         	}
@@ -73,26 +73,8 @@ public class App {
         	
     	}
     	else {
-    		System.out.println( "---FIN PROGRAMME---" ); // Si echec de la connection a la bd
+    		System.out.println( "---FIN PROGRAMME---" ); // Si echec de la connexion à la BD
     	}
     	
     }
 }
-
-//TO DO
-//Ajouter ShowSationsVPlus() et ShowSationsVMoins()
-/* 
-	//Recherche dans la base de donne toutes les sations
-	// VPlus et les affiches
-	
-	public void ShowSationsVPlus() {
-		// TODO
-	}
-	
-	//Recherche dans la base de donne toutes les sations
-	//VMoins et les affiches
-	
-	public void ShowSationsVMoins() {
-		// TODO
-	}
-*/	

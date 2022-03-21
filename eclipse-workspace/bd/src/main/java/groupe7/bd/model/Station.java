@@ -6,34 +6,38 @@ public class Station {
 
 	Interface inter;//Permet d'accer au fonction de l'interface
 	
-	private String adresse;
-	private Status status;
-
-	//constructeurs
-	public Station(String adresse){
-		this.adresse = adresse;
-		this.status = Status.VNul;
+	/*
+	 * Crée une instance de Station 
+	 */
+	public Station(int i) {
+		// TODO Auto-generated constructor stub
 	}
 
-	public Station(String adresse, Status status){
-		this.adresse = adresse;
-		this.status = status;
+	/*Recherche dans la base de donne toutes les sations
+	 *VPlus et les affiches
+	*/
+	public void ShowSationsVPlus() {
+		// TODO
+	}
+	
+	/*Recherche dans la base de donne toutes les sations
+	 *VMoins et les affiches
+	*/
+	public void ShowSationsVMoins() {
+		// TODO
 	}
 
-	//getters et setters
-	public String getAdresse() {
-		return adresse;
+	/*Retourne la première bornette libre 
+	 * de la station
+	 */
+	public Bornette getPremierBornetteLibre() {
+		// TODO
+		return 0;
 	}
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
+	public Bornette veloExiste(Model manuel) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
 }

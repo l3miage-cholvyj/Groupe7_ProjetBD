@@ -1,53 +1,35 @@
 package groupe7.bd.model;
 
-import java.sql.Date;
-
 import groupe7.bd.*;
 
 public class Velo {
-
 	Interface inter;//Permet d'accer au fonction de l'interface
 
-	private int idVelo;
-	private Model modeleVelo;
-	private Etat etat;
-	private Date dateMeS;
-
-	//Constructeur
-	public Velo(int idVelo, Model modeleVelo, Etat etat, Date dateMeS) {
-		this.idVelo = idVelo;
-		this.modeleVelo = modeleVelo;
-		this.etat = etat;
-		this.dateMeS = dateMeS;
+	public Velo(Bornette bornetteCourante) {
+		// TODO Auto-generated constructor stub
 	}
 
-	//getters et setters
-	public int getIdVelo() {
-		return idVelo;
+	/*
+	 * Retourne l'id du velo
+	 */
+	public int getId() {
+		// TODO
+		return 0;
 	}
 
-	public void setIdVelo(int idVelo) {
-		this.idVelo = idVelo;
+	/*
+	 * Retourne le model du velo
+	 */
+	public Model getModel() {
+		// TODO
+		return null;
 	}
 
-	public Model getModeleVelo() {
-		return modeleVelo;
+	/*
+	 * Inscrit dans la base de donnée le trajet
+	 * du velo
+	 */
+	public void editTrajet(Station stationCourante) {
+		// TODO
 	}
-
-	public void setModeleVelo(Model modeleVelo) {
-		this.modeleVelo = modeleVelo;
-	}
-
-	public void setEtat(Etat etat) {
-		this.etat = etat;
-	}
-
-	public Date getDateMeS() {
-		return dateMeS;
-	}
-
-	public void setDateMeS(Date dateMeS) {
-		this.dateMeS = dateMeS;
-	}
-
 }
