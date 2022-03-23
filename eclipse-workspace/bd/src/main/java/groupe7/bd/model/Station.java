@@ -14,6 +14,7 @@ public class Station {
 	 * adresse = null
 	 * status = VNul 
 	 */
+
 	public Station(){
 		this.adresse = null;
 		this.status = Status.VNul;
@@ -45,6 +46,8 @@ public class Station {
 	 *
 	 */
 	public void loadStation(int idStation) {
+		
+		
 		// TODO
 		
 	}

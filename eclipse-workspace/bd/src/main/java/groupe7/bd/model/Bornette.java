@@ -1,5 +1,10 @@
 package groupe7.bd.model;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.*;
+import org.hibernate.sql.Select;
 import groupe7.bd.*;
+import groupe7.bd.utils.TheConnection;
 
 public class Bornette {
 	//Attributs
@@ -39,14 +44,9 @@ public class Bornette {
 	 * Intteroge la base de donnèe pour rècupèrer les valeurs de la bornette "idBornette".
 	 * [Java]
 	 * Met à jour les valeur de l'objet courant
-	 * le type de retour c'est void ou bien bornette ?? j'ai mis bornette
-	 * Réponse c'est VOID et le ? dans ta requete c'est le paramètre idBornette
+	 *
 	 */
-	public void loadBornette(int idBornette){
-	
-	}
 	public Bornette loadBornette(int idBornette) {
-		
 		try {
 		Connection conn=TheConnection.getInstance();
 		PreparedStatement statement = conn.prepareStatement("select *from Bornette where idBorne=?");
@@ -63,8 +63,10 @@ public class Bornette {
 			e.printStackTrace();
 			//TODO: handle exception
 			return null;
+
 		}
 		
+
 		// TODO
 		
 	}

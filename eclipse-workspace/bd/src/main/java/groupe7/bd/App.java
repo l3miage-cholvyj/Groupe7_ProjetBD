@@ -5,8 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.persistence.Persistence;
+
+import groupe7.bd.utils.TheConnection;
 
 
 /*
@@ -59,7 +60,35 @@ public class App {
 	//--MAIN--
 	public static void main( String[] args ) throws SQLException
     {
-        //Variable
+
+		try {
+			
+			
+			System.out.println("bonjour ");
+			Connection conn=TheConnection.getInstance();
+	  java.sql.Statement requete = conn.createStatement();
+	 ResultSet resultat = requete.executeQuery("SELECT * from Station");
+       while(resultat.next()){
+		System.out.println("id: " + resultat.getInt("idStation"));
+		System.out.println("nom: " + resultat.getString("adresse"));
+		System.out.println("prenom: " + resultat.getString("statu"));
+		Interface.Interface(0);
+	 }
+
+
+			// traitement d'exception
+		} catch (SQLException e) {
+			TheConnection.close();
+			System.err.println("failed");
+			System.out.println("Affichage de la pile d'erreur");
+			e.printStackTrace(System.err);
+			System.out.println("Affichage du message d'erreur");
+			System.out.println(e.getMessage());
+			System.out.println("Affichage du code d'erreur");
+			System.out.println(e.getErrorCode());	    
+		}
+
+       /* //Variable
     	Connection con;
     	
     	System.out.println( "Launcher groupe 7 database" );
@@ -87,7 +116,7 @@ public class App {
         		System.out.println("prenom: " + resultatTestSql.getString("prenom"));
         	}
         	*/
-        	
+        	/*
         	//--- Lance l'interface Textuelle ---
         	Interface.Interface(0);
         	//---
@@ -96,6 +125,10 @@ public class App {
     	else {
     		System.out.println( "---FIN PROGRAMME---" ); // Si echec de la connexion à la BD
     	}
-    	
+		
+    	*/
+
     }
+	
+	
 }
