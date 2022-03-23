@@ -18,7 +18,7 @@ create table Station (
 
 ----------
 create table Bornette (
-	idBorne int primary key,
+	idBornette int primary key,
 	idStation int,
 	etatBornette varchar(20),
     constraint fk_B foreign KEY (idStation) references Station (idStation),
@@ -36,7 +36,7 @@ create table Velo (
 	constraint ck2_V check (etatVelo in ('ok','hs','maintenance'))
 );
 
----------- n'est pas fait d'abord 
+---------- n'est pas d'ici faudrait verifier les tables ----------
 create table Locations(
 	numCB integer,
 	prix float,
@@ -48,8 +48,8 @@ create table Locations(
 --------------------------
 create table Trajet(
 	idVelo int ,
-	StationDepart varchar(20),
-	StationArrevee varchar(20)
+	StationDepart int,
+	StationArrevee int
 );
 
 --------------------------
