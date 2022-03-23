@@ -39,9 +39,29 @@ public class Bornette {
 	 * Intteroge la base de donnèe pour rècupèrer les valeurs de la bornette "idBornette".
 	 * [Java]
 	 * Met à jour les valeur de l'objet courant
-	 *
+	 * le type de retour c'est void ou bien bornette ?? j'ai mis bornette 
 	 */
-	public void loadBornette(int idBornette) {
+	
+	public Bornette loadBornette(int idBornette) {
+		
+		try {
+		Connection conn=TheConnection.getInstance();
+		PreparedStatement statement = conn.prepareStatement("select *from Bornette where idBorne=?");
+		statement.setInt(1,idBornette);
+		ResultSet resultat =  statement.executeQuery();
+		Bornette borne =  new Bornette();
+		while(resultat.next()){
+			borne.setIdBornette(resultat.getInt("idBorne"));
+		}
+
+		return borne;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			//TODO: handle exception
+			return null;
+		}
+		
 		// TODO
 		
 	}
