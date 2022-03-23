@@ -36,7 +36,7 @@ create table Velo (
 	constraint ck2_V check (etatVelo in ('ok','hs','maintenance'))
 );
 
----------- n'est pas d'ici faudrait verifier les tables ----------
+---------- à partir d'ici faudrait verifier les tables ----------
 create table Locations(
 	numCB integer,
 	prix float,
