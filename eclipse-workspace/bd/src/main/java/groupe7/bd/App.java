@@ -10,6 +10,22 @@ import javax.persistence.Persistence;
 
 
 /*
+ * COVENTION DE NOMAGE DES FONCTIONS
+ * 
+ * set_NOMATTRIBUT() -> fixe la valeur d'un attribut de l'objet courant
+ * get_NOMATTRIBUT() -> retourne la valeur d'un attribut de l'objet courant
+ * get_CLASS_CRITAIRES() -> retourne une instance de type CLASS associée à l'objet courant qui respecte les CRITAIRES
+ * get_List_CLASS_CRITAIRES() -> retourne une liste instances de type CLASS associées à l'objet courant qui respectent les CRITAIRES
+ * calcul_TEXT() -> calcul et retourne quelquechose associé à l'objet courant 
+ * Save_TEXT() -> Met à jou la base de donnèe avec les valeurs de l'objet (java) courant.
+ * Load_TEXT() -> Met à jour un objet (java) courant en chargeant les valeurs depuis la base de donnée
+ * Edit_TEXT() -> Moddifie l'objet (java) courant et met à jour la base de donnée. (Edit = Save + Load)
+ * Show_TEXT() -> Recherche quelque choses dans la base de donnèe et affiche les résultat [ne retourne et crée RIEN]
+ *
+ *
+ */
+
+/*
 Test commande
 java.sql.Statement testeSql = con.createStatement();
 java.sql.ResultSet resultatTestSql = testeSql.executeQuery("SELECT * FROM utilisateur");
@@ -23,6 +39,10 @@ System.out.println("prenom: " + resultatTestSql.getString("prenom"));
 
 public class App {
 
+	
+	/*
+	 * Etablie une connextion vers une base de donnée local
+	 */
 	public static Connection ConnectionBD(String url,String user,String password) {
 		try {
 	    	Connection con = DriverManager.getConnection(url,user,password);
@@ -35,8 +55,9 @@ public class App {
 	    	return null;
 	    }
 	}
-
-    public static void main( String[] args ) throws SQLException
+	
+	//--MAIN--
+	public static void main( String[] args ) throws SQLException
     {
         //Variable
     	Connection con;
@@ -67,7 +88,7 @@ public class App {
         	}
         	*/
         	
-        	//--- Interface Textuelle ---
+        	//--- Lance l'interface Textuelle ---
         	Interface.Interface(0);
         	//---
         	

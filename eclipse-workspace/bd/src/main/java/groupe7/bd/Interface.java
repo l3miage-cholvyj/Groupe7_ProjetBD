@@ -2,8 +2,9 @@ package groupe7.bd;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
 
@@ -23,12 +24,12 @@ public class Interface {
 	
 	//Tableau des idPages
 	private static int tabIdPage[][] ={
-		/*N°00*/{-1,11,10,30,40,-1,-1,-1,-1,-1},/*N°01*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+		/*N°00*/{-1,11,12,21,31,-1,-1,-1,-1,-1},/*N°01*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°02*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°03*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°04*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°05*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°06*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°07*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°08*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°09*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-		/*N°10*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°11*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+		/*N°10*/{-1,13,16,20,30,15,0,-1,-1,-1},/*N°11*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°12*/{-1,-1,-1,-1,-1,-1,0,-1,-1,-1},/*N°13*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°14*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°15*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°16*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°17*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -50,6 +51,47 @@ public class Interface {
 		/*N°48*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},/*N°49*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		/*N°50*/{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
 	};
+	
+	//FONCTIONS SHOW  Recherchent des valeurs dans la bases de donnèes et les affiches
+	
+		/*
+		 * Recherche dans la base de donnèe toutes les station Vplus
+		 * et les affiches
+		 */
+		public static void showSationsVPlus() {
+			// TODO
+		}
+		
+		/*
+		 * Recherche dans la base de donnèe toutes les station Vmoins
+		 * et les affiches
+		 */
+		public static void showSationsVMoins() {
+			// TODO
+		}
+		
+		/*
+		 * [SQL]
+		 * Interroge la base de donnèe pour récupèrer toutes les stations.
+		 * Affiche les résultat sous la forme:
+		 * 	(1)-> Station n° /idStaion/: /adresse/
+		 *  (2)-> ...
+		 * 
+		 */
+		public static void showAllStation() {
+			// TODO
+		}
+		
+		/*
+		 * [SQL]
+		 * Interroge la base de donnèe pour obetenir le nombre de stations
+		 * et le retourne
+		 */
+		public static int calculNombreStation() {
+			// TODO
+			return 0;
+		}
+		
 	
 	/*
 	 * Génére un code secret aléatoire pour les utilisateurs anonymes (sans abonnement)
@@ -94,22 +136,51 @@ public class Interface {
 	}
 	
 	/*
-	 * Convertie une chaîne de caractère de format (JJ/MM/AAAA) en une date local_date 
+	 * Convertie une chaîne de caractère de format (dd/MM/yyyy HH:mm:ss.SS) en une date
 	 * et la retourne. 
 	*/
-	public static LocalDate dateStrConv(String dateStr) {
-		DateTimeFormatter JEFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	    LocalDate local_date = LocalDate.parse(dateStr, JEFormatter);
-	    
-	    return local_date;
+	public static Date dateStrConv(String dateStr) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+		String strDate = sdf.format(dateStr);
+		Date date;
+		try {
+			date = sdf.parse(strDate);
+		} 
+		catch (ParseException e) {
+			return null;
+			//e.printStackTrace();
+		}
+	    return date;
 	}
 	
 	/*
-	 * Demande à l'utilisateur d'entrer une date au format (JJ/MM/AAAA) chaine de caractère
-	 * et la retourne. 
+	 * Renvoie la date et l'heure du jour. 
 	*/
-	public static LocalDate demandeDate() {
-		LocalDate date =  dateStrConv("21/12/2021");
+	public static Date now() {
+		Calendar cal = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		SimpleDateFormat sdf1 = new SimpleDateFormat();
+	    sdf1.applyPattern("dd/MM/yyyy HH:mm:ss.SS");
+	    String strDate = sdf.format(cal.getTime());
+	    Date dateDuJour;
+		try {
+			dateDuJour = sdf1.parse(strDate);
+		} catch (ParseException e) {
+			return null;
+			//e.printStackTrace();
+		}
+	    return dateDuJour;
+		
+	}
+	
+	/*
+	 * Demande à l'utilisateur d'entrer une date au format (dd/MM/yyyy HH:mm:ss.SS)
+	 * et la retourne comme une date.
+	 * Cf: dateStrConv() pour converir un String en Date
+	 * 		ATTENTION Gérer l'exception
+	*/
+	public static Date demandeDate() {
+		Date date =  dateStrConv("01/01/0000 00:00:00.00");
 		// TODO
 		return date;
 	}
@@ -118,8 +189,8 @@ public class Interface {
 	 * Demande à l'utilisateur d'entrer un code
 	 * secret et le retourne. 
 	*/
-	public static int demandeCodeSecret() {
-		return 1234;// TODO
+	public static String demandeCodeSecret() {
+		return "0152";// TODO
 	}
 	
 	/*
@@ -168,26 +239,36 @@ public class Interface {
 	 * Page Home principale
 	 */
 	public static void InterfaceP0() {
-		stationCourante = new Station(1);
+		System.out.println( "---------------------------------" );
+		//Choix de la station
+		System.out.println( "A quel sations êtes vous ?");
+		System.out.println( "" );
+		showAllStation(); // Affiche les stations
+		int nbStaions = calculNombreStation(); //Récupère le nombre de Stations
+		int idStation = demandeInt(1,nbStaions); // Demande l'id de la Station à l'USER
+		stationCourante = new Station(); // Crée une instance station "vide"	
+		stationCourante.loadStation(idStation); // LOAD les valeur de la stationCourante
+		
+		//Affichage de l'écran
 		System.out.println( "---------------------------------" );
 		System.out.println( "Bonjour! Bienvenue sur VéPick" );
 		System.out.println( "Que voulez-vous faire ?" );
+		System.out.println( "" );
 		System.out.println( "(1)->S'identifier" );
 		System.out.println( "(2)->Créer un compte" );
 		System.out.println( "(3)->Prendre un vélo" );
 		System.out.println( "(4)->Rendre un vélo" );
-		System.out.println( "" );
 	}
 	
 	/*
 	 * Page Accueil abonné
 	 */
 	public static void InterfaceP10() {
-		
+		//Affichage de l'écran
 		System.out.println( "---------------------------------" );
 		System.out.println( "Bonjour! "+abonneCourant.getNom()+""+abonneCourant.getPrenom());
 		System.out.println( "Que voulez-vous faire ?" );
-		
+		System.out.println( "" );
 		System.out.println( "(1)->Information compte" );
 		System.out.println( "(2)->Prendre un vélo" );
 		System.out.println( "(3)->Rendre un vélo" );
@@ -202,25 +283,31 @@ public class Interface {
 	public static void InterfaceP11() {
 		String nomAbonne,codeSecretAbonne;
 		
+		//Demande les informations de connextion
 		System.out.println( "---------------------------------" );
 		System.out.println( "Veuillez entrer votre ");
+		System.out.println( "" );
 		System.out.println( "nom: ");nomAbonne = demandeString();
 		System.out.println( "code secret: ");codeSecretAbonne = demandeString();
+		System.out.println( "" );
 		
-		/*
-		 * Lance une identification
-		 */
-		abonneCourant = new Abonne(nomAbonne,codeSecretAbonne);
+		//Teste nom et codeSecret
+		abonneCourant = new Abonne(); // Crée une instance Abonne "vide"
+		abonneCourant.loadAbonne(nomAbonne,codeSecretAbonne); // LOAD les valeur de l'abonneCourant
+		//ECHEC mauvais nom ou codeSecret
 		if (abonneCourant.getNom() == null) {
-			System.out.println( "Echec de la connexion" );
-			Interface(0);
+			System.out.println("Echec de la connexion");
+			Interface(0); //Retour home page 0
 		}
+		//SUCCES
 		else {
 			System.out.println( "Connexion réussie" );
-			if (flag20 == true) Interface(20);
+			if (flag20 == true) {
+				Interface(20); //Vers page emprunt vélo
+			}
 			else {
-				if (flag30 == true) Interface(30);
-				else Interface(10);	
+				if (flag30 == true) Interface(30); //Vers page remise vélo
+				else Interface(10);	//Vers page home abonné
 			}
 		}
 	}
@@ -229,8 +316,9 @@ public class Interface {
 	 * Page de création d'un d'abonné
 	 */
 	public static void InterfaceP12() {
-		
-		abonneCourant.newAbonne();		
+		System.out.println( "---------------------------------" );
+		abonneCourant = new Abonne(); // Crée une instance Abonne "vide"
+		abonneCourant.SaveNewAbonne(); // Crée et enregistre le nouvelle abonèe
 		Interface(10);
 	}
 	
@@ -238,7 +326,8 @@ public class Interface {
 	 * Affiche les informations de l'abonné
 	 */
 	public static void InterfaceP13() {
-		abonneCourant.getInformation();
+		System.out.println( "---------------------------------" );
+		abonneCourant.showProfil(); // Affiche le profil de l'abonne courant
 		System.out.println( "" );
 		System.out.println( "(1)->Retourner au menu" );
 		System.out.println( "(2)->Editer le profil" );
@@ -248,7 +337,7 @@ public class Interface {
 	 * Edite les informations de l'abonné
 	 */
 	public static void InterfaceP14() {
-		abonneCourant.Edit();
+		abonneCourant.editProfil();
 		attentAppuieTouche();
 		Interface(10);
 	}
@@ -257,37 +346,51 @@ public class Interface {
 	 * Affiche les stations VPlus et VMoins
 	 */
 	public static void InterfaceP15() {
+		System.out.println( "---------------------------------" );
 		System.out.println( "Liste des stations VPlus" );
-		stationCourante.ShowSationsVPlus();
+		showSationsVPlus();
+		System.out.println( "" );
 		System.out.println( "Liste des stations VMoins" );
-		stationCourante.ShowSationsVMoins();
+		showSationsVMoins();
 		
 		attentAppuieTouche();
 		Interface(10);
 	}
 	
 	/*
-	 * Modiffie le flag 20
+	 * Affiche l'historique des locations
 	 */
-	public static void InterfaceP18() {
-		flag20 = true; 
+	public static void InterfaceP16() {
+		System.out.println( "---------------------------------" );
+		abonneCourant.showHistorique();
+		
+		attentAppuieTouche();
 		Interface(10);
 	}
 	
-	/*
-	 * Modiffie le flag 30
+	/* 
+	 * Redirection de connexion vers l'emprunt velo
 	 */
-		public static void InterfaceP19() {
-			flag30 = true; 
-			Interface(10);
-		}
+	public static void InterfaceP18() {
+		flag20 = true;
+		Interface(11);
+	}
+	
+	/*
+	 * Redirection de connexion vers la remise velo
+	 */
+	public static void InterfaceP19() {
+		flag30 = true; 
+		Interface(11);
+	}
 
 	/*
 	 * Page home emprunt velo (location)
 	 */
 	public static void InterfaceP20() {
-		//Créer une nouvelle instance de location pour l'abonneCourant
-		locationCourante = new Location(abonneCourant);
+		//Créer une nouvelle instance de location vide
+		locationCourante = new Location();
+		locationCourante.editLocationAbonne(abonneCourant.getCB(),abonneCourant.getAbonneId());
 		Interface(23);
 	}
 	
@@ -295,6 +398,7 @@ public class Interface {
 	 * Page emprunt vélo (sans abonnement)
 	 */
 	public static void InterfaceP21() {
+		System.out.println( "---------------------------------" );
 		System.out.println( "Emprunter des vélos:");
 		System.out.println( "(1)->Vous connecter");
 		System.out.println( "(2)->Sans connexion" );
@@ -304,17 +408,21 @@ public class Interface {
 	 * Page emprunt velo (génération code secret)
 	 */
 	public static void InterfaceP22() {
+		System.out.println( "---------------------------------" );
+		System.out.println( "Veuillez entrer votre numéro de CB: " );
+		String numCB = demandeCarteBancaire();
 		String codeSecret = genererCodeSecret();
-		locationCourante.rechercheCodeSecret(codeSecret);
+		locationCourante.editLocationAnonyme(numCB, codeSecret);
 		System.out.println( "Votre code secret est: "+codeSecret);
 		attentAppuieTouche();
 		Interface(23);	
 	}
 	
 	/*
-	 * Page home emprunt vélo (Veéo)
+	 * Page home emprunt vélo (Vélo)
 	 */
 	public static void InterfaceP23() {
+		System.out.println( "---------------------------------" );
 		System.out.println("Quel modèle de vélo voulez-vous");
 		System.out.println( "(1)->Manuel" );
 		System.out.println( "(2)->Electrique" );
@@ -325,13 +433,16 @@ public class Interface {
 	 * Page de vérification de l'existence d'un vélo model Manuel
 	 */
 	public static void InterfaceP24() {
-		bornetteCourante = stationCourante.veloExiste(Model.Manuel);
+		int idBornette = stationCourante.veloExiste(Model.Manuel);
+		bornetteCourante = new Bornette();
+		bornetteCourante.loadBornette(idBornette);
 		if(bornetteCourante == null) {
 			System.out.println("Erreur, ce modèle est indisponible");
 			Interface(23);
 		}
 		else {
-			veloCourant = new Velo(bornetteCourante);
+			veloCourant = new Velo();
+			veloCourant.loadVelo(bornetteCourante.getIdBornette());
 			Interface(26);
 		}
 	}
@@ -340,34 +451,47 @@ public class Interface {
 	 * Page de vérification de l'existence d'un vélo model Electrique
 	 */
 	public static void InterfaceP25() {
-		bornetteCourante = stationCourante.veloExiste(Model.Electrique);
+		int idBornette = stationCourante.veloExiste(Model.Electrique);
+		bornetteCourante = new Bornette();
+		bornetteCourante.loadBornette(idBornette);
 		if(bornetteCourante == null) {
 			System.out.println("Erreur, ce modèle est indisponible");
 			Interface(23);
 		}
 		else {
-			veloCourant = new Velo(bornetteCourante);
+			veloCourant = new Velo();
+			veloCourant.loadVelo(bornetteCourante.getIdBornette());
 			Interface(26);
 		}
 	}
 	
-	
-		
 		
 	public static void InterfaceP26() {
-		locationCourante.AjouterUnVelo(veloCourant);
-		System.out.println( "Prenez le velo n°"+veloCourant.getId()+ " à la bornette"+bornetteCourante.getId());
+		System.out.println( "---------------------------------" );
+		locationCourante.editAjouterUnVelo(veloCourant);
+		System.out.println( "Prenez le velo n°"+veloCourant.getIdVelo()+ " à la bornette"+bornetteCourante.getIdBornette());
+		attentAppuieTouche();
 		Interface(23);
-		//TODO
+	}
+	
+	/*
+	 * Fin de l'emprunt vélo
+	 */
+	public static void InterfaceP27() {
+		System.out.println( "---------------------------------" );
+		System.out.println( "Bonne Route avec vePick");
+		attentAppuieTouche();
+		Interface(0);	
 	}
 	
 	/*
 	 * Page Remise vélo
 	 */
 	public static void InterfaceP30() {
+		System.out.println( "---------------------------------" );
 		System.out.println( "Bonjour "+abonneCourant.getNom()+" "+abonneCourant.getPrenom());
-		if (abonneCourant.nbLocation() == 1) { 
-			locationCourante = abonneCourant.getLocation();
+		if (abonneCourant.calculNbLocation() == 1) { 
+			locationCourante = abonneCourant.getLocation(0);
 			Interface(34);
 		}
 		else Interface(33);
@@ -377,6 +501,7 @@ public class Interface {
 	 * Page Remise sans Abonnement
 	 */
 	public static void InterfaceP31() {
+		System.out.println( "---------------------------------" );
 		System.out.println( "Emprunter des vélos:");
 		System.out.println( "(1)->Vous connecter");
 		System.out.println( "(2)->Sans connexion" );
@@ -384,11 +509,15 @@ public class Interface {
 	
 	//Pages Code secret
 	public static void InterfaceP32() {
+		System.out.println( "---------------------------------" );
 		System.out.println( "Veuillez entrer votre code secret:");
 		System.out.println( "Code secret:");
-		locationCourante = new Location(demandeCodeSecret())
+		locationCourante = new Location();
+		String codeSecret = demandeCodeSecret();
+		locationCourante.loadLocationClient(codeSecret);
 		if (locationCourante == null) {
 			System.out.println( "Code secret Invalide");
+			attentAppuieTouche();
 			Interface(0);
 		}
 		else {
@@ -399,55 +528,63 @@ public class Interface {
 	
 	//Choix de location
 	public static void InterfaceP33() {
-		abonneCourant.afficheLocation();
+		abonneCourant.showLocation();
+		System.out.println( "---------------------------------" );
 		System.out.println( "Veuillez choisir votre location:");
-		int nbLocations = abonneCourant.nbLocation();
-		int indexChoix = demandeInt(1,nbLocations);
-		locationCourante = abonneCourant.getLocation(indexChoix);
+		int nbLocations = abonneCourant.calculNbLocation();
+		int indexLocation = demandeInt(1,nbLocations);
+		locationCourante = abonneCourant.getLocation(indexLocation-1);
 		Interface(34);
 	}
 		
 	//Remise de velo
 	public static void InterfaceP34() {
-		System.out.println( "Nombre de velo à rendre: "+abonneCourant.getNbVelo(locationCourante));
-		locationCourante.getVelo();
-		int id = veloCourant.getId();
-		Model model = veloCourant.getModel();
-		bornetteCourante = stationCourante.getPremierBornetteLibre(); 
+		System.out.println( "---------------------------------" );
+		System.out.println( "Nombre de velo à rendre: "+locationCourante.calculNbVelo());
+		veloCourant = new Velo();
+		veloCourant.loadVeloFirstFromLocation(locationCourante.getIdLocation());
+		int id = veloCourant.getIdVelo();
+		Model model = veloCourant.getModeleVelo();
+		int idBornette = stationCourante.getFirstIdBornetteLibre();
+		bornetteCourante = new Bornette();
+		bornetteCourante.loadBornette(idBornette);
 		if(bornetteCourante == null) {
 			System.out.println("Plus de place disponible, veuillez trouver une autre station");
 			Interface(36);
 		}
 		else
 		{
-			int idBornette = bornetteCourante.getId();
 			System.out.println( "Rendre le velo N°"+id+"de model: "+model+" à la bornette N° "+idBornette);
 			System.out.println( "(1)->Confirmer la remise du velo");
 			System.out.println( "(2)->Arrêter");
 		}
 	}
-	
+
 	//Valider Rendus Velo
 	public static void InterfaceP35() {
-		veloCourant.editTrajet(stationCourante);
-		Interface(36);
+		System.out.println( "---------------------------------" );
+		locationCourante.editVeloRendu(veloCourant.getIdVelo(),bornetteCourante.getIdBornette());
+		veloCourant = null;
+		bornetteCourante = null;
+		Interface(34);
 	}
 		
 	//Stop Locations
 	public static void InterfaceP36() {
-		if (abonneCourant.getNbVelo(locationCourante) > 0) {
-			//locationCourante.splitLocation();
-			int prix = locationCourante.getPrix();
+		if (abonneCourant.calculNbLocation() > 0) {
+			System.out.println( "---------------------------------" );
+			locationCourante.editSplitLocation();
+			locationCourante.calculPrixLocation();
 			System.out.println( "Votre location vous a coûté:"+locationCourante.getPrix()+"€");
 			System.out.println( "Merci d'avoir utilisé Vé Pick");
 		}
 	}
 	
+	
 	//Page d'erreur
 	public static void 	InterfaceErr() {
 		System.out.println( "---------------------------------" );
 		System.out.println( "Page 404 Not found" );
-		System.out.println( "---------------------------------" );
 	}
 
 	public static void Interface(int idPage) {
@@ -462,6 +599,7 @@ public class Interface {
 			case 13: InterfaceP13();break;
 			case 14: InterfaceP14();break;
 			case 15: InterfaceP15();break;
+			case 16: InterfaceP16();break;
 			case 18: InterfaceP18();break;
 			case 19: InterfaceP19();break;
 			
@@ -469,6 +607,10 @@ public class Interface {
 			case 21: InterfaceP21();break;
 			case 22: InterfaceP22();break;
 			case 23: InterfaceP23();break;
+			case 24: InterfaceP24();break;
+			case 25: InterfaceP25();break;
+			case 26: InterfaceP26();break;
+			case 27: InterfaceP27();break;
 			
 			case 30: InterfaceP30();break;
 			case 31: InterfaceP31();break;
@@ -487,6 +629,7 @@ public class Interface {
 		}
 		
 		//Choix du menu
+		System.out.println( "" );
 		int nextIdPage = choixMenu(idPage);
 		System.out.println( "---------------------------------\n" );
 		Interface(nextIdPage);

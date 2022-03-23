@@ -1,35 +1,89 @@
 package groupe7.bd.model;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import groupe7.bd.*;
 
 public class Velo {
+	//Attributs
 	Interface inter;//Permet d'accer au fonction de l'interface
+	private int idVelo;
+	private Model modeleVelo;
+	private Etat etat;
+	private Date dateMeS;
 
-	public Velo(Bornette bornetteCourante) {
-		// TODO Auto-generated constructor stub
+	//Constructeur
+	public Velo() {
+		this.idVelo = 0;
+		this.modeleVelo = Model.Manuel;
+		this.etat = Etat.Ok;
+		this.dateMeS = Interface.dateStrConv("01/01/0000 00:00:00.00");
+	}
+	
+	public Velo(int idVelo, Model modeleVelo, Etat etat, Date dateMeS) {
+		this.idVelo = idVelo;
+		this.modeleVelo = modeleVelo;
+		this.etat = etat;
+		this.dateMeS = dateMeS;
 	}
 
-	/*
-	 * Retourne l'id du velo
+	//getters et setters
+	public int getIdVelo() {
+		return idVelo;
+	}
+	
+	public void setIdVelo(int idVelo) {
+		this.idVelo = idVelo;
+	}
+
+	public Model getModeleVelo() {
+		return modeleVelo;
+	}
+
+	public void setModeleVelo(Model modeleVelo) {
+		this.modeleVelo = modeleVelo;
+	}
+	
+	public Etat getEtat() {
+		return etat;
+	}
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
+	}
+
+	public Date getDateMeS() {
+		return dateMeS;
+	}
+
+	public void setDateMeS(Date dateMeS) {
+		this.dateMeS = dateMeS;
+	}
+	
+	//Fonctions applications
+	/* [Sql]
+	 * Intteroge la base de donnèe pour rècupèrer les valeurs du velo "idVelo".
+	 * [Java]
+	 * Met à jour les valeur de l'objet courant
+	 *
 	 */
-	public int getId() {
+	public void loadVelo(int idVelo) {
 		// TODO
-		return 0;
+		
+	}
+	
+	//Fonctions applications
+	/* [Sql]
+	 * Intteroge la base de donnèe pour rècupèrer les valeurs du premier velo
+	 * de la location id location.
+	 * [Java]
+	 * Met à jour les valeur de l'objet courant
+	 *
+	 */
+	public void loadVeloFirstFromLocation(int idLocation) {
+		// TODO
 	}
 
-	/*
-	 * Retourne le model du velo
-	 */
-	public Model getModel() {
-		// TODO
-		return null;
-	}
 
-	/*
-	 * Inscrit dans la base de donnée le trajet
-	 * du velo
-	 */
-	public void editTrajet(Station stationCourante) {
-		// TODO
-	}
 }
