@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Location {
 	Interface inter;//Permet d'accer au fonction de l'interface
+	private int idLocation;
 	private String numCB;
 	private List<Velo> velos;
 	private String codeSecret;
@@ -19,6 +20,7 @@ public class Location {
 
 	//contructeur
 	public Location() {
+		this.idLocation = 0;
 		this.numCB = null;
 		this.velos = new ArrayList<Velo>();
 		this.codeSecret = null;
@@ -39,6 +41,67 @@ public class Location {
 	}*/
 	
 	//getters et setters
+
+	public int getIdLocation() {
+		return idLocation;
+	}
+
+	public void setIdLocation(int idLocation) {
+		this.idLocation = idLocation;
+	}
+	
+	public String getNumCB() {
+		return numCB;
+	}
+
+	public void setNumCB(String numCB) {
+		this.numCB = numCB;
+	}
+
+	public List<Velo> getVelos() {
+		return velos;
+	}
+
+	public void setVelos(List<Velo> velos) {
+		this.velos = velos;
+	}
+
+	public String getCodeSecret() {
+		return codeSecret;
+	}
+
+	public void setCodeSecret(String codeSecret) {
+		this.codeSecret = codeSecret;
+	}
+
+	public Date getDateDebutLocation() {
+		return dateDebutLocation;
+	}
+
+	public void setDateDebutLocation(Date dateDebutLocation) {
+		this.dateDebutLocation = dateDebutLocation;
+	}
+
+	public Date getDateFinLocation() {
+		return dateFinLocation;
+	}
+
+	public void setDateFinLocation(Date dateFinLocation) {
+		this.dateFinLocation = dateFinLocation;
+	}
+
+	public Double getPrix() {
+		return prix;
+	}
+
+	public void setPrix(Double prix) {
+		this.prix = prix;
+	}
+	
+	
+	
+	
+	/*
 	public String getNumCB(){
 		return numCB;
 	}
@@ -77,7 +140,7 @@ public class Location {
 	public double getPrix() {
 		return prix;
 	}
-	
+	*/
 	//Fonctions applications
 	
 	/*
@@ -89,7 +152,7 @@ public class Location {
 	public void editLocationAnonyme(String numCB,String codeSecret) {
 		// TODO	
 	}
-	
+
 	/*
 	 * [Java]
 	 * Fixe les valeurs des attributs numCB et codeSecret à null car client abonné

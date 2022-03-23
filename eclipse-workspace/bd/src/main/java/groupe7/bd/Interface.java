@@ -16,7 +16,6 @@ public class Interface {
 	private static Bornette bornetteCourante;
 	private static Velo veloCourant;
 	private static Location locationCourante;
-	private static Trajet trajetCourant;
 	private static Client clientCourant;
 	private static Abonne abonneCourant;
 	private static boolean flag20;
@@ -381,7 +380,7 @@ public class Interface {
 	public static void InterfaceP20() {
 		//Créer une nouvelle instance de location vide
 		locationCourante = new Location();
-		locationCourante.editLocationAbonne(abonneCourant.getCB(),abonneCourant.getAbonneId());
+		locationCourante.editLocationAbonne(abonneCourant.getNumeroCarteBancaire(),abonneCourant.getAbonneId());
 		Interface(23);
 	}
 	

@@ -1,27 +1,92 @@
 package groupe7.bd.model;
 import groupe7.bd.*;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 public class Abonne {
 	//Attributs
 	Interface inter;//Permet d'accer au fonction de l'interface
+	int idAbonne;
+	String nom;
+	String prenom;
+	String numeroCarteBancaire;
+	Date dateDeNaissance;
+	Sexe sexe;
+	Date dateDAbonnement;
+	String codeSecret;
+	
 	
 	//Constructeurs
 		
 	//getters et setters
+	public int getIdAbonne() {
+		return idAbonne;
+	}
+
+	public void setIdAbonne(int idAbonne) {
+		this.idAbonne = idAbonne;
+	}
+
 	public String getNom() {
-		//TODO
-		return "nom";
+		return nom;
 	}
-	
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
 	public String getPrenom() {
-		//TODO
-		return "prenom";
+		return prenom;
 	}
-	
-	public String getCB() {
-		//TODO
-		return "prenom";
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
+
+	public String getNumeroCarteBancaire() {
+		return numeroCarteBancaire;
+	}
+
+	public void setNumeroCarteBancaire(String numeroCarteBancaire) {
+		this.numeroCarteBancaire = numeroCarteBancaire;
+	}
+
+	public Date getDateDeNaissance() {
+		return dateDeNaissance;
+	}
+
+	public void setDateDeNaissance(Date dateDeNaissance) {
+		this.dateDeNaissance = dateDeNaissance;
+	}
+
+	public Sexe getSexe() {
+		return sexe;
+	}
+
+	public void setSexe(Sexe sexe) {
+		this.sexe = sexe;
+	}
+
+	public Date getDateDAbonnement() {
+		return dateDAbonnement;
+	}
+
+	public void setDateDAbonnement(Date dateDAbonnement) {
+		this.dateDAbonnement = dateDAbonnement;
+	}
+
+	public String getCodeSecret() {
+		return codeSecret;
+	}
+
+	public void setCodeSecret(String codeSecret) {
+		this.codeSecret = codeSecret;
+	}
+
 	
 	//Fonctions applications
 	
@@ -165,11 +230,6 @@ public class Abonne {
 		
 	}
 
-
-	
-
-	
-	
 	
 	//public Abonne(String nomAbonne, String codeSecretAbonne) {
 		// TODO Auto-generated constructor stub
@@ -237,8 +297,6 @@ public class Abonne {
 		// TODO
 	}
 
-	
-
 	/*Interoge la base de donnèe pour savoir
 	 *  si le le code secret et celui d'un abonné 
 	 * annonyme
@@ -247,7 +305,5 @@ public class Abonne {
 		// TODO
 		return false;
 	}
-
-	
 
 }

@@ -5,6 +5,7 @@ import groupe7.bd.*;
 public class Station {
 	//Attributs
 	Interface inter;//Permet d'accer au fonction de l'interface
+	private int idStation;
 	private String adresse;
 	private Status status;
 
@@ -14,13 +15,22 @@ public class Station {
 	 * adresse = null
 	 * status = VNul 
 	 */
-
 	public Station(){
+		this.idStation = 0;
 		this.adresse = null;
 		this.status = Status.VNul;
 	}
 	
 	//getters et setters
+	
+	public int getIdStation() {
+		return idStation;
+	}
+
+	public void setIdStation(int idStation) {
+		this.idStation = idStation;
+	}
+	
 	public String getAdresse() {
 		return adresse;
 	}
@@ -46,8 +56,6 @@ public class Station {
 	 *
 	 */
 	public void loadStation(int idStation) {
-		
-		
 		// TODO
 		
 	}
