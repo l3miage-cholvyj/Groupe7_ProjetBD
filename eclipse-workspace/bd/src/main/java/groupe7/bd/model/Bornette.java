@@ -39,9 +39,12 @@ public class Bornette {
 	 * Intteroge la base de donnèe pour rècupèrer les valeurs de la bornette "idBornette".
 	 * [Java]
 	 * Met à jour les valeur de l'objet courant
-	 * le type de retour c'est void ou bien bornette ?? j'ai mis bornette 
+	 * le type de retour c'est void ou bien bornette ?? j'ai mis bornette
+	 * Réponse c'est VOID et le ? dans ta requete c'est le paramètre idBornette
 	 */
+	public void loadBornette(int idBornette){
 	
+	}
 	public Bornette loadBornette(int idBornette) {
 		
 		try {
