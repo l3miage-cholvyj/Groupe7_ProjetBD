@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
+import java.util.Scanner;
 
 import groupe7.bd.model.*;
 
@@ -16,6 +17,7 @@ public class Interface {
 	private static Bornette bornetteCourante;
 	private static Velo veloCourant;
 	private static Location locationCourante;
+	private static Trajet trajetCourant;
 	private static Client clientCourant;
 	private static Abonne abonneCourant;
 	private static boolean flag20;
@@ -94,17 +96,32 @@ public class Interface {
 	 * de caractère et la retourne. 
 	*/
 	public static String demandeString() {
-		//TODO
-		return "null";
+		Scanner scanner = new Scanner(System.in);
+		String str = scanner.nextLine();
+		
+		while(str.isEmpty() == true){
+			System.out.println("Veuillez saisir une donnee non-vide!");
+			str = scanner.nextLine();
+		}
+		scanner.close();
+		return str;
 	}
+	
 	
 	/*
 	 * Demande à l'utilisateur d'entrée un entier compris
 	 * entre min et max inclus et le retourne
 	*/
 	public static int demandeInt(int min,int max) {
-		// TODO
-		return 0;
+		Scanner scanner = new Scanner(System.in);
+		int x = Integer.parseInt(scanner.nextLine());
+
+		while(x < min || x>max){
+			System.out.println("Veuillez saisir un numero entre "+ min +" et " +max);
+			x = Integer.parseInt(scanner.nextLine());
+		}
+		scanner.close();
+		return x;
 	}
 	
 	/*
@@ -112,8 +129,15 @@ public class Interface {
 	 * H (homme) F(femme) et le retourne
 	*/
 	public static Sexe demandeSexe() {
-		// TODO
-		return Sexe.H;
+		Scanner scanner = new Scanner(System.in);
+		String sexe = scanner.nextLine();
+
+		while(sexe.equals("H") == false || sexe.equals("F") == false){
+			System.out.println("Veuillez saisir H (pour Homme) ou F (pour Femme)");
+			sexe = scanner.nextLine();
+		}
+		scanner.close();
+		return Sexe.valueOf(sexe);
 	}
 	
 	/*
@@ -380,7 +404,7 @@ public class Interface {
 	public static void InterfaceP20() {
 		//Créer une nouvelle instance de location vide
 		locationCourante = new Location();
-		locationCourante.editLocationAbonne(abonneCourant.getNumeroCarteBancaire(),abonneCourant.getAbonneId());
+		locationCourante.editLocationAbonne(abonneCourant.getCB(),abonneCourant.getAbonneId());
 		Interface(23);
 	}
 	
