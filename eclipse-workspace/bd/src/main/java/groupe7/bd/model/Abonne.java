@@ -17,7 +17,7 @@ public class Abonne {
 	Date dateDeNaissance;
 	Sexe sexe;
 	Date dateDAbonnement;
-	String codeSecret;
+	int codeSecret;
 	
 	
 	//Constructeurs
@@ -79,11 +79,11 @@ public class Abonne {
 		this.dateDAbonnement = dateDAbonnement;
 	}
 
-	public String getCodeSecret() {
+	public int getCodeSecret() {
 		return codeSecret;
 	}
 
-	public void setCodeSecret(String codeSecret) {
+	public void setCodeSecret(int codeSecret) {
 		this.codeSecret = codeSecret;
 	}
 
