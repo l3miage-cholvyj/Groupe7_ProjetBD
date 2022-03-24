@@ -1,6 +1,10 @@
 package groupe7.bd.model;
 import groupe7.bd.*;
+import groupe7.bd.utils.TheConnection;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,7 +21,7 @@ public class Abonne {
 	Date dateDeNaissance;
 	Sexe sexe;
 	Date dateDAbonnement;
-	int codeSecret;
+	String codeSecret;
 	
 	
 	//Constructeurs
@@ -79,11 +83,11 @@ public class Abonne {
 		this.dateDAbonnement = dateDAbonnement;
 	}
 
-	public int getCodeSecret() {
+	public String getCodeSecret() {
 		return codeSecret;
 	}
 
-	public void setCodeSecret(int codeSecret) {
+	public void setCodeSecret(String codeSecret) {
 		this.codeSecret = codeSecret;
 	}
 
@@ -98,7 +102,39 @@ public class Abonne {
 	 *
 	 */
 	public void loadAbonne(String nomAbonne, String codeSecretAbonne) {
-		// TODO	
+		try {
+			//SQL
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+		
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery("SELECT * FROM Abonne WHERE  nom = "+nomAbonne+" and codeSecret = "+codeSecretAbonne);
+			resultat.next();
+			
+			//JAVA
+			this.idAbonne = resultat.getInt("idAbonne");
+			
+			this.nom = resultat.getString("nom");
+			
+			this.prenom = resultat.getString("prenom");
+			
+			String sexeVal = resultat.getString("sexe");
+			if (sexeVal == "h") this.sexe = Sexe.H;
+			else this.sexe = Sexe.F;
+			
+			this.numeroCarteBancaire = resultat.getString("numCB"); // ALER le chercher dans la table Client
+			
+			String naissanceStr = resultat.getString("dateNaissance");
+			this.dateDeNaissance = Interface.dateStrConv(naissanceStr+"00:00:00.00");
+			
+			String abonnementStr = resultat.getString("dateAbonnement");
+			this.dateDAbonnement = Interface.dateStrConv(abonnementStr+"00:00:00.00");
+	
+			this.codeSecret= resultat.getString("codeSecret");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/* 
