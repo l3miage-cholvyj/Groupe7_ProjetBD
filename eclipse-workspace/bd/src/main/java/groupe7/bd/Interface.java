@@ -1,6 +1,8 @@
 package groupe7.bd;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +12,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import groupe7.bd.model.*;
+import groupe7.bd.utils.TheConnection;
 
 public class Interface {
 	
@@ -17,7 +20,6 @@ public class Interface {
 	private static Bornette bornetteCourante;
 	private static Velo veloCourant;
 	private static Location locationCourante;
-	private static Trajet trajetCourant;
 	private static Client clientCourant;
 	private static Abonne abonneCourant;
 	private static boolean flag20;
@@ -42,7 +44,20 @@ public class Interface {
 		 * et les affiches
 		 */
 		public static void showSationsVPlus() {
-			// TODO
+			try {
+				Connection conn=TheConnection.getInstance();
+				java.sql.Statement requete;
+			
+				requete = conn.createStatement();
+				ResultSet resultat = requete.executeQuery("SELECT * FROM Station WHERE statu = vplus");
+				int index = 1;
+				while(resultat.next()){
+					System.out.println("("+index+")-> Station N°"+resultat.getString("idStation")+" "+resultat.getString("adresse"));
+					index++;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		/*
@@ -50,7 +65,20 @@ public class Interface {
 		 * et les affiches
 		 */
 		public static void showSationsVMoins() {
-			// TODO
+			try {
+				Connection conn=TheConnection.getInstance();
+				java.sql.Statement requete;
+			
+				requete = conn.createStatement();
+				ResultSet resultat = requete.executeQuery("SELECT * FROM Station WHERE statu = vmoins");
+				int index = 1;
+				while(resultat.next()){
+					System.out.println("("+index+")-> Station N°"+resultat.getString("idStation")+" "+resultat.getString("adresse"));
+					index++;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		/*
@@ -62,7 +90,20 @@ public class Interface {
 		 * 
 		 */
 		public static void showAllStation() {
-			// TODO
+			try {
+				Connection conn=TheConnection.getInstance();
+				java.sql.Statement requete;
+			
+				requete = conn.createStatement();
+				ResultSet resultat = requete.executeQuery("SELECT * FROM Station");
+				int index = 1;
+				while(resultat.next()){
+					System.out.println("("+index+")-> Station N°"+resultat.getString("idStation")+" "+resultat.getString("adresse"));
+					index++;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		/*
@@ -71,24 +112,54 @@ public class Interface {
 		 * et le retourne
 		 */
 		public static int calculNombreStation() {
-			// TODO
-			return 0;
+			try {
+				Connection conn=TheConnection.getInstance();
+				java.sql.Statement requete;
+			
+				requete = conn.createStatement();
+				ResultSet resultat = requete.executeQuery("SELECT COUNT(*) AS NbStation FROM Station");
+				resultat.next();
+				int nbStation = resultat.getInt("NbStation");
+				return nbStation;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;
+			}
+			
 		}
 		
 	
 	/*
+	 * Retourne un entier en un string de length taille
+	 */
+	public static String convIntStr(int nbCodeS,int taille) {
+		String codeSecret = Integer.toString(nbCodeS);
+		//Plus grand
+		while (codeSecret.length() < taille) {
+			codeSecret = "0"+codeSecret;
+		}
+		return codeSecret;
+	}
+		
+	/*
 	 * Génére un code secret aléatoire pour les utilisateurs anonymes (sans abonnement)
 	 */
 	public static String genererCodeSecret() {
-		//TODO
-		return "111111111";
+		int nbCodeS = 1 + (int) (Math.random() * 9998);
+		String codeSecret = convIntStr(nbCodeS,4);
+		return codeSecret;
 	}
 	
 	/*
 	 * Attend que l'utilisateur appuie sur n'importe quelle touche
 	 */
 	public static void attentAppuieTouche() {
-		//TODO
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Appuyer sur une touche pour continuer");
+		scanner.nextLine();
+		
+		//scanner.close();
 	}
 	
 	/*
@@ -97,13 +168,13 @@ public class Interface {
 	*/
 	public static String demandeString() {
 		Scanner scanner = new Scanner(System.in);
-		String str = scanner.nextLine();
+		String str = "";
 		
 		while(str.isEmpty() == true){
-			System.out.println("Veuillez saisir une donnee non-vide!");
+			//System.out.println("Veuillez saisir une donnee non-vide!");
 			str = scanner.nextLine();
 		}
-		scanner.close();
+		//scanner.close();
 		return str;
 	}
 	
@@ -113,15 +184,26 @@ public class Interface {
 	 * entre min et max inclus et le retourne
 	*/
 	public static int demandeInt(int min,int max) {
-		Scanner scanner = new Scanner(System.in);
-		int x = Integer.parseInt(scanner.nextLine());
+		java.util.Scanner entree =   new java.util.Scanner(System.in);
+		int entier = min - 1;
 
-		while(x < min || x>max){
-			System.out.println("Veuillez saisir un numero entre "+ min +" et " +max);
-			x = Integer.parseInt(scanner.nextLine());
+		while(entier < min || entier>max){
+			try{
+				System.out.println("Veuillez saisir un numero entre "+ min +" et " +max);
+				entier = entree.nextInt();
+				if (entier < min || entier>max) System.out.println( "!Saisie invalide!\n");
+			}
+			catch (InputMismatchException e) {
+				 System.out.println( "!Saisie invalide!\n");
+				 entier = demandeInt(min, max);
+				 //entree.close();
+				 return entier;
+			}
+			
+			
 		}
-		scanner.close();
-		return x;
+		//entree.close();
+		return entier;
 	}
 	
 	/*
@@ -130,13 +212,13 @@ public class Interface {
 	*/
 	public static Sexe demandeSexe() {
 		Scanner scanner = new Scanner(System.in);
-		String sexe = scanner.nextLine();
+		String sexe = "";
 
-		while(sexe.equals("H") == false || sexe.equals("F") == false){
+		while(sexe.equals("H") == false && sexe.equals("F") == false){
 			System.out.println("Veuillez saisir H (pour Homme) ou F (pour Femme)");
 			sexe = scanner.nextLine();
 		}
-		scanner.close();
+		//scanner.close();
 		return Sexe.valueOf(sexe);
 	}
 	
@@ -185,17 +267,32 @@ public class Interface {
 	 * 		ATTENTION Gérer l'exception
 	*/
 	public static Date demandeDate() {
-		Date date =  dateStrConv("01/01/0000 00:00:00.00");
-		// TODO
+		Date date =  null;
+		
+		Scanner scanner = new Scanner(System.in);
+		String str;
+		
+		while(date ==  null){
+			//System.out.println("Veuillez saisir une date sous la forme JJ/MM/AAAA");
+			str = scanner.nextLine();
+			date =  dateStrConv(str+"00:00:00.00");
+		}
+		//scanner.close();
 		return date;
 	}
 	
+	//demandeCodeSecret() et demandeCarteBancaire() peuvent être fussionnées
+	//en 1 fonction demandeSuiteDeChiffre(int tailleMax);
+	//-----------------------------------------------------------------------------
 	/*
 	 * Demande à l'utilisateur d'entrer un code
 	 * secret et le retourne. 
 	*/
 	public static String demandeCodeSecret() {
-		return "0152";// TODO
+		String codeSecret = demandeString();
+		//Tester si codeSecret est consitué que de chiffre
+		// NON PRIORITAIRE
+		return codeSecret;
 	}
 	
 	/*
@@ -203,39 +300,37 @@ public class Interface {
 	 * bancaire et le retourne. 
 	*/
 	public static String demandeCarteBancaire() {
-		return "155895124569475";// TODO
+		String carteBancaire = demandeString();
+		//Tester si demandeCarteBancaire est consitué que de chiffre
+		// NON PRIORITAIRE
+		return carteBancaire;
 	}
+	//-----------------------------------------------------------------------------
+	
 	
 	/*
 	 * Demande à l'utilisateur d'entrer un nombre correspondant
 	 * à son choix du menu et l'id de la page suivante.
 	*/
 	public static int choixMenu(int idPage){
-		int idChoix = 0,idPageNext = -1,index = 0;
-		java.util.Scanner entree =   new java.util.Scanner(System.in);
+		int idChoix = 0,idPageNext = -1,index = 0,index2 ,limite = 1;
 		
 		//index de l'id page
 		while ((tabIdPage[index][0] != idPage) && (index < tabIdPage.length)) {
 			index++;
 		}
 		
-		System.out.println( "Entrer votre choix: " );
-		
+		//Erreur
 		if (index == tabIdPage.length) {
 			System.out.println( "!--Erreur tableau de redirection manquan--!\n");
 		}
 		
-		while (idPageNext < 0) {
-			try {
-				idChoix = entree.nextInt();
-				if (idChoix > 0) idPageNext = tabIdPage[index][idChoix];
-				if ((idPageNext == -1) || (idChoix == 0) ) System.out.println( "!--Choix invalide--!\n Entrer votre choix: ");
-			}
-			catch (InputMismatchException e) {
-				 System.out.println( "!--Choix invalide--!\n");
-				 return -1;
-			}
+		//choix du menu de 1 à limite
+		while ((tabIdPage[index][limite] != -1) && (index < 10)) {
+			limite++;
 		}
+		index2 = demandeInt(1,limite-1);
+		idPageNext = tabIdPage[index][index2];
 		
 		return idPageNext;
 		
@@ -258,6 +353,7 @@ public class Interface {
 		System.out.println( "A quel sations êtes vous ?");
 		System.out.println( "" );
 		showAllStation(); // Affiche les stations
+		System.out.println( "" );
 		int nbStaions = calculNombreStation(); //Récupère le nombre de Stations
 		int idStation = demandeInt(1,nbStaions); // Demande l'id de la Station à l'USER
 		stationCourante = new Station(); // Crée une instance station "vide"	
@@ -404,7 +500,7 @@ public class Interface {
 	public static void InterfaceP20() {
 		//Créer une nouvelle instance de location vide
 		locationCourante = new Location();
-		locationCourante.editLocationAbonne(abonneCourant.getCB(),abonneCourant.getAbonneId());
+		locationCourante.editLocationAbonne(abonneCourant.getNumeroCarteBancaire(),abonneCourant.getAbonneId());
 		Interface(23);
 	}
 	
@@ -634,11 +730,6 @@ public class Interface {
 			case 35: InterfaceP35();break;
 			case 36: InterfaceP36();break;
 			
-			
-			/*
-			case 6: InterfaceP1();break;
-			case 7: InterfaceP1();break;
-			*/
 			default: InterfaceErr();
 		}
 		

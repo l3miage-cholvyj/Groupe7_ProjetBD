@@ -61,21 +61,15 @@ public class App {
 	public static void main( String[] args ) throws SQLException
     {
 
-		try {
-			System.out.println("bonjour ");
-			Connection conn=TheConnection.getInstance();
-			java.sql.Statement requete = conn.createStatement();
-			ResultSet resultat = requete.executeQuery("SELECT * from Station");
-			while(resultat.next()){
-				System.out.println("id: " + resultat.getInt("idStation"));
-				System.out.println("nom: " + resultat.getString("adresse"));
-				System.out.println("prenom: " + resultat.getString("statu"));
-			}
-			Interface.Interface(0);
+		System.out.println("START vePick ");
+		Connection conn=TheConnection.getInstance();
 
+		Interface.Interface(0);
 
 			// traitement d'exception
-		} catch (SQLException e) {
+		 
+		/*
+		catch (SQLException e) {
 			TheConnection.close();
 			System.err.println("failed");
 			System.out.println("Affichage de la pile d'erreur");
@@ -84,7 +78,7 @@ public class App {
 			System.out.println(e.getMessage());
 			System.out.println("Affichage du code d'erreur");
 			System.out.println(e.getErrorCode());	    
-		}
+		}*/
 
     }
 	
