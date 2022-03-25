@@ -11,16 +11,7 @@ public class Station {
 
 	
 	//--Constructeurs-- 
-	/* par défaut
-	 * adresse = null
-	 * status = VNul 
-	 */
-	public Station(){
-		this.idStation = 0;
-		this.adresse = null;
-		this.status = Status.VNul;
-	}
-	
+
 	//getters et setters
 	
 	public int getIdStation() {

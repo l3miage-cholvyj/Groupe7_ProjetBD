@@ -86,8 +86,7 @@ public class Interface {
 		 * Interroge la base de donnèe pour récupèrer toutes les stations.
 		 * Affiche les résultat sous la forme:
 		 * 	(1)-> Station n° /idStaion/: /adresse/
-		 *  (2)-> ...
-		 * 
+		 *  (2)-> ... 
 		 */
 		public static void showAllStation() {
 			try {
@@ -223,15 +222,46 @@ public class Interface {
 	}
 	
 	/*
+	 * Convertie une date SQL au format date JAVA
+	*/
+	public static Date convDateFormat(String dateStr) {
+		//Patherne SQL: AAAA-MM-JJ hh:mm:ss
+		//Patherne JAVA: dd/MM/yyyy HH:mm:ss.SS
+		
+		char a1 = dateStr.charAt(0);
+		char a2 = dateStr.charAt(1);
+		char a3 = dateStr.charAt(2);
+		char a4 = dateStr.charAt(3);
+		
+		char m1 = dateStr.charAt(5);
+		char m2 = dateStr.charAt(6);
+		
+		char j1 = dateStr.charAt(8);
+		char j2 = dateStr.charAt(9);
+		
+		char h1 = dateStr.charAt(11);
+		char h2 = dateStr.charAt(12);
+		
+		char mm1 = dateStr.charAt(14);
+		char mm2 = dateStr.charAt(15);
+		
+		char s1 = dateStr.charAt(17);
+		char s2 = dateStr.charAt(18);
+		
+		return dateStrConv(j1+""+j2+"/"+m1+m2+"/"+a1+a2+a3+a4+h1+h2+":"+mm1+mm2+":"+s1+s2+".00");
+	}
+	
+	
+	/*
 	 * Convertie une chaîne de caractère de format (dd/MM/yyyy HH:mm:ss.SS) en une date
-	 * et la retourne. 
+	 * et la retourne.
 	*/
 	public static Date dateStrConv(String dateStr) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
-		String strDate = sdf.format(dateStr);
+		//System.out.println("->"+dateStr);
 		Date date;
 		try {
-			date = sdf.parse(strDate);
+			date = sdf.parse(dateStr);
 		} 
 		catch (ParseException e) {
 			return null;
@@ -275,7 +305,7 @@ public class Interface {
 		while(date ==  null){
 			//System.out.println("Veuillez saisir une date sous la forme JJ/MM/AAAA");
 			str = scanner.nextLine();
-			date =  dateStrConv(str+"00:00:00.00");
+			date =  dateStrConv(str+" 00:00:00.00");
 		}
 		//scanner.close();
 		return date;
@@ -376,7 +406,7 @@ public class Interface {
 	public static void InterfaceP10() {
 		//Affichage de l'écran
 		System.out.println( "---------------------------------" );
-		System.out.println( "Bonjour! "+abonneCourant.getNom()+""+abonneCourant.getPrenom());
+		System.out.println( "Bonjour! "+abonneCourant.getPrenom()+" "+abonneCourant.getNom());
 		System.out.println( "Que voulez-vous faire ?" );
 		System.out.println( "" );
 		System.out.println( "(1)->Information compte" );
@@ -522,8 +552,8 @@ public class Interface {
 		System.out.println( "Veuillez entrer votre numéro de CB: " );
 		String numCB = demandeCarteBancaire();
 		String codeSecret = genererCodeSecret();
-		locationCourante.editLocationAnonyme(numCB, codeSecret);
 		System.out.println( "Votre code secret est: "+codeSecret);
+		locationCourante.editLocationAnonyme(numCB, codeSecret);
 		attentAppuieTouche();
 		Interface(23);	
 	}

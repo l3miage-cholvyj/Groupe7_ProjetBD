@@ -8,10 +8,6 @@ public class Bornette {
 	private Etat etatBornette;
 	
 	//Constructeurs
-	public Bornette (){
-        this.idBornette=0;
-		  this.etatBornette=Etat.Ok;
-	}
 	
 	/*
 	public Bornette (int idBornette,Etat etatBornette){

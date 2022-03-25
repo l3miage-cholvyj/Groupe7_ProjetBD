@@ -106,32 +106,37 @@ public class Abonne {
 			//SQL
 			Connection conn=TheConnection.getInstance();
 			java.sql.Statement requete;
+			
+			//Sql commande
+			String sqlCommad = "SELECT * FROM Abonne NATURAL JOIN Client WHERE (nom = '"+nomAbonne+"' and codeSecret =" +codeSecretAbonne+")";
 		
 			requete = conn.createStatement();
-			ResultSet resultat = requete.executeQuery("SELECT * FROM Abonne WHERE  nom = "+nomAbonne+" and codeSecret = "+codeSecretAbonne);
-			resultat.next();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
 			
-			//JAVA
-			this.idAbonne = resultat.getInt("idAbonne");
-			
-			this.nom = resultat.getString("nom");
-			
-			this.prenom = resultat.getString("prenom");
-			
-			String sexeVal = resultat.getString("sexe");
-			if (sexeVal == "h") this.sexe = Sexe.H;
-			else this.sexe = Sexe.F;
-			
-			this.numeroCarteBancaire = resultat.getString("numCB"); // ALER le chercher dans la table Client
-			
-			String naissanceStr = resultat.getString("dateNaissance");
-			this.dateDeNaissance = Interface.dateStrConv(naissanceStr+"00:00:00.00");
-			
-			String abonnementStr = resultat.getString("dateAbonnement");
-			this.dateDAbonnement = Interface.dateStrConv(abonnementStr+"00:00:00.00");
-	
-			this.codeSecret= resultat.getString("codeSecret");
-			
+			while (resultat.next()) {
+				
+				//JAVA
+				this.idAbonne = resultat.getInt("idAbonne");
+				
+				this.nom = resultat.getString("nom");
+				
+				this.prenom = resultat.getString("prenom");
+				
+				String sexeVal = resultat.getString("sexe");
+				if (sexeVal == "h") this.sexe = Sexe.H;
+				else this.sexe = Sexe.F;
+				
+				this.numeroCarteBancaire = resultat.getString("numCB");
+				
+				String naissanceStr = resultat.getString("dateNaissance");
+				this.dateDeNaissance = Interface.convDateFormat(naissanceStr);
+				
+				String abonnementStr = resultat.getString("dateAbonnement");
+				this.dateDAbonnement = Interface.convDateFormat(abonnementStr);
+		
+				this.codeSecret= resultat.getString("codeSecret");
+			}
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
