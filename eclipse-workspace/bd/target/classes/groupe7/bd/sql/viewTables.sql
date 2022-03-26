@@ -38,7 +38,18 @@ SELECT * FROM Velo LEFT JOIN Bornette USING (idBornette) WHERE (idStation = 1 an
 SELECT * FROM Velo RIGHT JOIN Bornette USING (idBornette) WHERE (idStation = 1 and etatBornette = 'ok' and idVelo is  NULL) LIMIT 1;
 
 /*Retourne tous les vélos d'une locations X*/
+SELECT * FROM LocationsDetail WHERE (idLocations = 2);
+
+/*Retourne tous les locations d'un locations X*/
+SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (idAbonne = 1);
+
+/*Retourne tous le nombre de locations d'un locations X*/
+SELECT COUNT(*) AS nbLocations  FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (idAbonne = 1);
 
 /*Crée un abonne*/
 INSERT INTO Abonne (idClient,nom,prenom,dateNaissance,sexe,dateAbonnement,codeSecret) VALUES (8,"FONTAINE","Marc","1997-07-27","h","2022-04-07","9645");
+
+/*Retourne les locations avec les informations du propriètaires */
+SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient);
+
 

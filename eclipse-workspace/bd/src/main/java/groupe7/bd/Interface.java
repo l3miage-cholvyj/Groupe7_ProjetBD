@@ -530,7 +530,7 @@ public class Interface {
 	public static void InterfaceP20() {
 		//Créer une nouvelle instance de location vide
 		locationCourante = new Location();
-		locationCourante.editLocationAbonne(abonneCourant.getNumeroCarteBancaire(),abonneCourant.getAbonneId());
+		locationCourante.editLocationAbonne(abonneCourant.getNumeroCarteBancaire(),abonneCourant.getIdAbonne());
 		Interface(23);
 	}
 	

@@ -2,6 +2,7 @@ package groupe7.bd.model;
 import groupe7.bd.*;
 import groupe7.bd.utils.TheConnection;
 
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,10 +12,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 public class Abonne {
 	//Attributs
 	Interface inter;//Permet d'accer au fonction de l'interface
 	int idAbonne;
+	int idClient;
 	String nom;
 	String prenom;
 	String numeroCarteBancaire;
@@ -105,7 +108,7 @@ public class Abonne {
 		try {
 			//SQL
 			Connection conn=TheConnection.getInstance();
-			java.sql.Statement requete;
+			Statement requete;
 			
 			//Sql commande
 			String sqlCommad = "SELECT * FROM Abonne NATURAL JOIN Client WHERE (nom = '"+nomAbonne+"' and codeSecret =" +codeSecretAbonne+")";
@@ -151,28 +154,78 @@ public class Abonne {
 	public void SaveNewAbonne() {
 		System.out.println( "Création d'un abonnée");
 		System.out.println( "Veuillez entrer votre: ");
+		
 		System.out.println( "nom: ");
 		this.nom = Interface.demandeString();
+		
 		System.out.println( "prénom: ");
 		this.prenom = Interface.demandeString();
+		
 		System.out.println( "N° de CB: ");
 		this.numeroCarteBancaire = Interface.demandeCarteBancaire();
+		
 		System.out.println( "Date de naissance: ");
 		this.dateDeNaissance = Interface.demandeDate();
+		String dateDeNaissanceVal = "2000-01-01 00:00:00";
+		
 		System.out.println( "Sexe [F,H]: ");
 		this.sexe = Interface.demandeSexe();
+		String sexeVal;
+		if (this.sexe == Sexe.H) sexeVal = "h"; else sexeVal = "f";
+		
 		System.out.println( "Définir un code secret: ");
+		
 		this.codeSecret = Interface.demandeCodeSecret();
 		System.out.println( "");
 		
 		this.dateDAbonnement = Interface.now();
+		String dateDAbonnement = "2000-01-01 00:00:00";
 		
 			
 		System.out.println( "Félicitaions vous êtes abonnèes");
 		System.out.println( "");
 		
-		//[SQL] TODO
-		
+		//[SQL]
+		try {
+			
+			String sqlCommad = "INSERT INTO Client (numCB) VALUES ('"+this.numeroCarteBancaire+"')";
+			Connection conn=TheConnection.getInstance();
+			
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(sqlCommad, Statement.RETURN_GENERATED_KEYS);
+			
+			
+			//retourne l' id client
+			sqlCommad = "SELECT MAX(idClient) AS id FROM Client;";
+			Statement requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			
+			while (resultat.next()) {
+				this.idClient = resultat.getInt("id");
+			}
+			
+			//Sql commande new abonne
+			sqlCommad = "INSERT INTO Abonne (idClient,nom,prenom,dateNaissance,sexe,dateAbonnement,codeSecret) VALUES ("
+			+idClient+",'"+this.nom+"','"+this.prenom+"','"+dateDeNaissanceVal+"','"+sexeVal+"','"+dateDAbonnement+"','"+this.codeSecret+"')";
+			stmt = conn.createStatement();
+			//Statement stmt = conn.prepareStatement(sqlCommad, Statement.RETURN_GENERATED_KEYS);
+			stmt.executeUpdate(sqlCommad);
+			
+			//retourne l' id de l'abonne
+			sqlCommad = "SELECT MAX(idAbonne) AS id FROM Abonne;";
+			requete = conn.createStatement();
+			resultat = requete.executeQuery(sqlCommad);
+			
+			while (resultat.next()) {
+				this.idAbonne = resultat.getInt("id");
+			}
+			
+			System.out.println("-<"+this.idAbonne+"/"+this.idClient);
+			
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -186,8 +239,13 @@ public class Abonne {
 	 * 
 	 */
 	public void showProfil() {
-		// TODO
-		
+		System.out.println("--------PROFIL ABONNE: -------");
+		System.out.println("Nom: "+this.nom);
+		System.out.println("Prénom:"+this.prenom);
+		System.out.println("Date de naissance: "+this.dateDeNaissance);
+		System.out.println("Sexe: "+this.sexe);
+		System.out.println("Numéro de CB: "+this.numeroCarteBancaire);
+		System.out.println("Date d'abonnement: "+this.dateDAbonnement);
 	}
 	
 	/* NON PRIORITAIRE
@@ -231,22 +289,10 @@ public class Abonne {
 		
 	}
 	
-	/* A sup si attrib idAbo
-	 * [Sql]
-	 * Interroge la base de donnèe pour optenir l'id de l'objet courant
-	 * et le retourne
-	 */
-	
-	public int getAbonneId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 	/* [Sql]
 	 * Interoge dans la base de donnèe
 	 * le nombre de location en cours
 	 * de l'abonné et le retourne
-	 * 
 	 */
 	public int calculNbLocation() {
 		// TODO

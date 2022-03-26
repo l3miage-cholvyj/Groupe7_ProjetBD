@@ -1,5 +1,10 @@
 package groupe7.bd.model;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import groupe7.bd.*;
+import groupe7.bd.utils.TheConnection;
 
 public class Bornette {
 	//Attributs
@@ -63,10 +68,5 @@ public class Bornette {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
-		// TODO
-		
-	}
-
 }

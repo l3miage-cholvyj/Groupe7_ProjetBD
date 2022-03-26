@@ -54,22 +54,23 @@ create table Locations(
 	idLocations int AUTO_INCREMENT primary key,
 	idClient int,
 	prix float,	
-	codeSecret integer,
+	codeSecret varchar(4),
 	constraint fk_L foreign KEY (idClient) references Client (idClient)
 );
 
 create table LocationsDetail(
 	idLocationsDetail int AUTO_INCREMENT primary key,
+	idLocations int,
 	idVelo int,
 	debut datetime,
 	fin datetime,
 	depart int,
 	arrivee int,
-	prix float,	
-	codeSecret integer,
-	constraint fk_LD foreign KEY (idVelo) references Velo (idVelo),
-	constraint fk_LD2 foreign KEY (depart) references Station (idStation),
-	constraint fk_LD3 foreign KEY (arrivee) references Station (idStation)
+	prix float,
+	constraint fk_LD foreign KEY (idLocations) references Locations (idLocations),
+	constraint fk_LD2 foreign KEY (idVelo) references Velo (idVelo),
+	constraint fk_LD3 foreign KEY (depart) references Station (idStation),
+	constraint fk_LD4 foreign KEY (arrivee) references Station (idStation)
 );
 
 

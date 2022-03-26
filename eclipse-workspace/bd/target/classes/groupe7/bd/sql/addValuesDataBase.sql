@@ -64,31 +64,31 @@ INSERT INTO Bornette (idBornette,idStation,etatBornette)
 /*Table Velo*/
 INSERT INTO Velo (idVelo,idBornette,modelVelo,etatVelo,dateMenS)
 	VALUES
-	(1,101,'manuel','ok','2022-01-02'),
-	(2,102,'manuel','ok','2022-01-03'),
-	(3,103,'electrique','ok','2022-01-04'),
-	(4,null,'electrique','hs','2022-01-05'),
-	(5,105,'manuel','ok','2022-01-01'),
-	(6,201,'manuel','ok','2022-01-02'),
-	(7,202,'manuel','ok','2022-01-03'),
-	(8,null,'electrique','hs','2022-01-04'),
-	(9,204,'electrique','ok','2022-01-05'),
-	(10,205,'manuel','ok','2022-01-01'),
-	(11,301,'manuel','ok','2022-01-02'),
-	(12,null,'manuel','hs','2022-01-03'),
-	(13,303,'electrique','ok','2022-01-04'),
-	(14,304,'electrique','ok','2022-01-05'),
-	(15,305,'manuel','ok','2022-01-01'),
-	(16,null,'manuel','hs','2022-01-02'),
-	(17,402,'manuel','ok','2022-01-03'),
-	(18,403,'electrique','ok','2022-01-04'),
-	(19,404,'electrique','ok','2022-01-05'),
-	(20,null,'manuel','hs','2022-01-01'),
-	(21,501,'manuel','ok','2022-01-02'),
-	(22,502,'manuel','ok','2022-01-03'),
-	(23,503,'electrique','ok','2022-01-04'),
-	(24,null,'electrique','hs','2022-01-05'),
-	(25,505,'manuel','ok','2022-01-01');
+	(1,null,'manuel','ok','22-01-02'),
+	(2,102,'manuel','ok','22-01-03'),
+	(3,null,'electrique','ok','22-01-04'),
+	(4,null,'electrique','hs','22-01-05'),
+	(5,null,'manuel','ok','22-01-01'),
+	(6,null,'manuel','ok','22-01-02'),
+	(7,202,'manuel','ok','22-01-03'),
+	(8,null,'electrique','hs','22-01-04'),
+	(9,null,'electrique','ok','22-01-05'),
+	(10,null,'manuel','ok','22-01-01'),
+	(11,301,'manuel','ok','22-01-02'),
+	(12,null,'manuel','hs','22-01-03'),
+	(13,303,'electrique','ok','22-01-04'),
+	(14,304,'electrique','ok','22-01-05'),
+	(15,305,'manuel','ok','22-01-01'),
+	(16,null,'manuel','hs','22-01-02'),
+	(17,402,'manuel','ok','22-01-03'),
+	(18,403,'electrique','ok','22-01-04'),
+	(19,404,'electrique','ok','22-01-05'),
+	(20,null,'manuel','hs','22-01-01'),
+	(21,501,'manuel','ok','22-01-02'),
+	(22,502,'manuel','ok','22-01-03'),
+	(23,503,'electrique','ok','22-01-04'),
+	(24,null,'electrique','hs','22-01-05'),
+	(25,505,'manuel','ok','22-01-01');
 
 /*Table Client*/
 INSERT INTO Client (idClient,numCB)
@@ -112,36 +112,40 @@ INSERT INTO Abonne (idAbonne,idClient,nom,prenom,dateNaissance,sexe,dateAbonneme
 	(3,3,"PEREZ","Gabriel","1983-09-19","h","2022-02-12","4415"),
 	(4,4,"DUPONT","Louise","2000-01-12","f","2022-03-11","3811");
 
-/*Table Location
--- INSERT INTO Location (idLocation,idClient,prix,codeSecret)
-	--VALUES
-	--(1,1,0,null),/*Location Abonne 1 velo en cours
-    --(2,2,0,null),/*Location Abonne 1 velo fini
-    --(3,3,0,null),/*Location Abonne +1 velo en cours
-    --(4,4,0,null),/*Location Abonne +1 velo fini
-    --(5,5,0,null),/*Location Non-Abonne 1 velo en cours
-    --(6,6,0,null),/*Location Non-Abonne 1 velo fini
-    --(7,7,0,null),/*Location Non-Abonne +1 velo en cours
-    --(8,8,0,null);/*Location Non-Abonne +1 velo fin
+/*Table Location*/
+INSERT INTO Locations (idLocations,idClient,prix,codeSecret)
+	VALUES
+	(1,1,null,null), /*Location Abonne 1 velo en cours*/
+    (2,2,null,null), /*Location Abonne 1 velo fini*/
+    (3,1,null,null), /*Location Abonne +1 velo en cours*/
+    (4,4,null,null), /*Location Abonne +1 velo fini*/
+    (5,5,null,"0001"), /*Location Non-Abonne 1 velo en cours*/
+    (6,6,null,"0002"), /*Location Non-Abonne 1 velo fini*/
+    (7,7,null,"0003"), /*Location Non-Abonne +1 velo en cours*/
+    (8,8,null,"0004"); /*Location Non-Abonne +1 velo fin*/
 
---Table LocationDetail
---INSERT INTO Location (idLocationDetail,idLocation,idVelo,prix,depart,arrivee,debut,fin)
-	--VALUES
-    --Location 1 Abonne 1 velo en cours
-    
-    --Location 2 Abonne 1 velo fini
-
-    --Location 3 Abonne +1 velo en cours
-
-    --Location 4 Abonne +1 velo fini
-
-    --Location 5 Non-Abonne 1 velo en cours
-
-    --Location 6 Non-Abonne 1 velo fini
-
-    --Location 7 Non-Abonne +1 velo en cours
-
-    --Location 8 Non-Abonne +1 velo fini
-*/
+/*Table LocationDetail*/
+INSERT INTO LocationsDetail (idLocations,idVelo,prix,depart,arrivee,debut,fin)
+	VALUES
+    /*Location 1 Abonne 1 velo en cours*/
+    (1,1,null,2,null,"2022-03-26 18:37:00",null),
+    /*Location 2 Abonne 1 velo fini*/
+	(2,2,null,2,3,"2022-03-25 18:36:00","2022-03-25 18:37:00"),
+    /*Location 3 Abonne +1 velo en cours*/
+	(4,3,null,2,null,"2022-03-26 18:37:00",null),
+	(3,5,null,2,null,"2022-03-26 18:37:00",null),
+    /*Location 4 Abonne +1 velo fini*/
+	(4,3,null,3,4,"2022-03-22 18:37:00","2022-03-22 19:37:00"),
+	(4,5,null,3,4,"2022-03-22 18:37:00","2022-03-22 19:45:00"),
+    /*Location 5 Non-Abonne 1 velo en cours*/
+	(5,6,null,2,null,"2022-03-26 18:37:00",null),
+    /*Location 6 Non-Abonne 1 velo fini*/
+	(6,7,null,2,3,"2022-03-25 18:36:00","2022-03-25 18:37:00"),
+    /*Location 7 Non-Abonne +1 velo en cours*/
+	(7,9,null,2,null,"2022-03-26 18:37:00",null),
+	(7,10,null,2,null,"2022-03-26 18:37:00",null),
+    /*Location 8 Non-Abonne +1 velo fini*/
+	(8,11,null,3,4,"2022-03-22 18:37:00","2022-03-22 19:37:00"),
+	(8,13,null,3,4,"2022-03-22 18:37:00","2022-03-22 19:45:00");
 
 

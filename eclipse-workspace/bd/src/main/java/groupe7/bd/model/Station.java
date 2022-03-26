@@ -74,16 +74,14 @@ public class Station {
 					break;
 					case "vnul": this.status=Status.VNul;
 					break;
-					default :
-					   break;
+					default : this.status = null;
 				}
 			}
 				
-		}catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		// TODO
 		
 	}
 	
@@ -95,8 +93,32 @@ public class Station {
 	 *
 	 */
 	public int veloExiste(Model type) {
-		// TODO Auto-generated method stub
-		return 0;
+		int idBornette = 0;
+		String modelVelo;
+		
+		//type
+		if (type == Model.Manuel) modelVelo = "manuel"; else modelVelo = "electrique";
+		
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+		
+		//Sql commande
+		String sqlCommad = "SELECT * FROM Velo LEFT JOIN Bornette USING (idBornette) WHERE (idStation = "+this.idStation+" and modelVelo = '"+modelVelo+"') LIMIT 1";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				idBornette = resultat.getInt(idBornette);
+			}
+			return idBornette;
+			
+		} 
+		catch (SQLException e) {
+			return 0;
+			//e.printStackTrace();
+		}
+		
 	}
 	
 
@@ -108,8 +130,28 @@ public class Station {
 	 *
 	 */
 	public int getFirstIdBornetteLibre() {
-		// TODO Auto-generated method stub
-		return 0;
+		int idBornette = 0;
+		String modelVelo;
+
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+		
+		//Sql commande
+		String sqlCommad = "SELECT * FROM Velo RIGHT JOIN Bornette USING (idBornette) WHERE (idStation = "+this.idStation+" and etatBornette = 'ok' and idVelo is  NULL) LIMIT 1";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				idBornette = resultat.getInt(idBornette);
+			}
+			return idBornette;
+			
+		} 
+		catch (SQLException e) {
+			return 0;
+			//e.printStackTrace();
+		}
 	}
 
 
