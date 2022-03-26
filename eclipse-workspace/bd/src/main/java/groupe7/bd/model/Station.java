@@ -1,6 +1,11 @@
 package groupe7.bd.model;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import groupe7.bd.*;
+import groupe7.bd.utils.TheConnection;
 
 public class Station {
 	//Attributs
@@ -47,6 +52,37 @@ public class Station {
 	 *
 	 */
 	public void loadStation(int idStation) {
+		try {
+			//SQL
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			
+			//Sql commande
+			String sqlCommad = "SELECT * FROM Station  WHERE (idStation = "+idStation+")";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				//JAVA
+				this.idStation= resultat.getInt("idStation");
+				this.adresse=resultat.getString("adresse");
+				String statu;
+				statu = resultat.getString("statu");
+				switch(statu){
+					case "vplus": this.status=Status.VPlus;
+					break;
+					case "vmoins" : this.status=Status.VMoins;
+					break;
+					case "vnul": this.status=Status.VNul;
+					break;
+					default :
+					   break;
+				}
+			}
+				
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		// TODO
 		
 	}
