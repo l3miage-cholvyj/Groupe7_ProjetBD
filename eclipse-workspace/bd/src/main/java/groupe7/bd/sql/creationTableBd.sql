@@ -55,6 +55,7 @@ create table Locations(
 	idClient int,
 	prix float,	
 	codeSecret varchar(4),
+	fini int DEFAULT 0,
 	constraint fk_L foreign KEY (idClient) references Client (idClient)
 );
 
@@ -67,6 +68,7 @@ create table LocationsDetail(
 	depart int,
 	arrivee int,
 	prix float,
+	fini int DEFAULT 0,
 	constraint fk_LD foreign KEY (idLocations) references Locations (idLocations),
 	constraint fk_LD2 foreign KEY (idVelo) references Velo (idVelo),
 	constraint fk_LD3 foreign KEY (depart) references Station (idStation),

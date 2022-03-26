@@ -40,6 +40,12 @@ SELECT * FROM Velo RIGHT JOIN Bornette USING (idBornette) WHERE (idStation = 1 a
 /*Retourne tous les vélos d'une locations X*/
 SELECT * FROM LocationsDetail WHERE (idLocations = 2);
 
+/*Retourne tous le premiers vélos d'une locations X*/
+SELECT * FROM LocationsDetail WHERE (idLocations = 2) LIMIT 1;
+
+/*Retourne le nombre de vélos d'une locations X*/
+SELECT COUNT(*) FROM LocationsDetail WHERE (idLocations = 2);
+
 /*Retourne tous les locations d'un locations X*/
 SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (idAbonne = 1);
 

@@ -1,7 +1,12 @@
 package groupe7.bd.model;
 
 import groupe7.bd.*;
+import groupe7.bd.utils.TheConnection;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,26 +14,19 @@ import java.util.Date;
 import java.util.List;
 
 public class Location {
-	Interface inter;//Permet d'accer au fonction de l'interface
-	private int idLocation;
-	private String numCB;
+	private int idLocations;
 	private List<Velo> velos;
 	private String codeSecret;
-	private Date dateDebutLocation;
-	private Date dateFinLocation;
 	private Double prix;
+	private boolean fini;
 
 	//contructeur
 	public Location() {
-		this.idLocation = 0;
-		this.numCB = null;
+		this.idLocations = 0;
 		this.velos = new ArrayList<Velo>();
 		this.codeSecret = null;
-		Date dateDebutLocation =  Interface.now();
-		this.dateDebutLocation = dateDebutLocation;
-		Date dateFinLocation =  null;
-		this.dateFinLocation = dateFinLocation;
 		this.prix = 0.0;
+		this.fini = false;
 	}
 	
 	/*
@@ -42,20 +40,12 @@ public class Location {
 	
 	//getters et setters
 
-	public int getIdLocation() {
-		return idLocation;
+	public int getIdLocations() {
+		return idLocations;
 	}
 
-	public void setIdLocation(int idLocation) {
-		this.idLocation = idLocation;
-	}
-	
-	public String getNumCB() {
-		return numCB;
-	}
-
-	public void setNumCB(String numCB) {
-		this.numCB = numCB;
+	public void setIdLocation(int idLocations) {
+		this.idLocations = idLocations;
 	}
 
 	public List<Velo> getVelos() {
@@ -74,22 +64,6 @@ public class Location {
 		this.codeSecret = codeSecret;
 	}
 
-	public Date getDateDebutLocation() {
-		return dateDebutLocation;
-	}
-
-	public void setDateDebutLocation(Date dateDebutLocation) {
-		this.dateDebutLocation = dateDebutLocation;
-	}
-
-	public Date getDateFinLocation() {
-		return dateFinLocation;
-	}
-
-	public void setDateFinLocation(Date dateFinLocation) {
-		this.dateFinLocation = dateFinLocation;
-	}
-
 	public Double getPrix() {
 		return prix;
 	}
@@ -98,59 +72,79 @@ public class Location {
 		this.prix = prix;
 	}
 	
-	
-	
-	
-	/*
-	public String getNumCB(){
-		return numCB;
-	}
-	public void  setNumCB(String numCB){
-		this.numCB=numCB;	
-    }
-
-	public List<Velo> getIdVelo() {
-		return velos;
+	public boolean getFini() {
+		return fini;
 	}
 
-	public String getCodeSecret(){
-		return codeSecret;
-	}
-	public void setCodeSecret(String codeSecret){
-		this.codeSecret=codeSecret;
-	}
-
-	public Date getDateDebutLocation(){
-		return dateDebutLocation;
-	}
-	public void setDateDebutLocation(Date dateDebutLocation){
-		this.dateDebutLocation=dateDebutLocation;
-	}
-	public Date getDateFinLocation(){
-		return dateFinLocation;
-	}
-	public void setDateFinLocation(Date dateFinLocation){
-		this.dateFinLocation=dateFinLocation;
+	public void setFini(boolean fini) {
+		this.fini = fini;
 	}
 	
-	public int getIdLocation() {
-		return 0;
-	}
-	
-	public double getPrix() {
-		return prix;
-	}
-	*/
 	//Fonctions applications
+	
+	
+	/* [Sql]
+	 * Intteroge la base de donnèe pour rècupèrer les valeurs de la location "idLocations".
+	 * [Java]
+	 * Met à jour les valeur de l'objet courant
+	 */
+	public void loadLocationIdLocations(int idLocations) {
+		
+		try {
+			//SQL
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			
+			//Sql commande
+			String sqlCommad = "SELECT * FROM Locations  WHERE (idLocation = "+idLocations+")";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				//JAVA
+				this.idLocations = resultat.getInt("idLocations");
+				this.codeSecret = resultat.getString("codeSecret");
+			}
+				
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/* [Sql]
+	 * Intteroge la base de donnèe pour rècupèrer les valeurs de la location "idLocations".
+	 * [Java]
+	 * Met à jour les valeur de l'objet courant
+	 */
+	public void shownLocationIdLocations() {
+		System.out.println("Location N°"+this.idLocations);
+		//Affiché vélo TODO
+		System.out.println("codeSecret: "+this.codeSecret);
+		System.out.println("prix: "+this.prix);
+		System.out.println("fini :"+this.fini);
+	}
+	
 	
 	/*
 	 * [Java]
-	 * Fixe les valeurs des attributs numCB et codeSecret
+	 * Fixe la valeurs de l'attributs numCB
+	 * et instance un nouveau client avec le numCB codeSecret
+	 * avant de l'associer à la location courante.
+	 * 
 	 * [Sql]
 	 * Met à jour la base de donnèe en créant une location associé à aucun abonné (client sans abonnement)
 	 */
 	public void editLocationAnonyme(String numCB,String codeSecret) {
-		// TODO	
+		//CodeSecret
+		this.codeSecret = codeSecret;
+		
+		//Client
+		Client clientAnnonyme = new Client();
+		
+		//TODO
+		/*
+		clientAnnonyme.getIdClient();	
+		clientAnnonyme.getNumeroCarteBancaire();*/
+		
 	}
 
 	/*
@@ -171,8 +165,14 @@ public class Location {
 	 * Met à jour la base en ajoutant le velo à la location courante 
 	 */
 	public void editAjouterUnVelo(Velo velo) {
-		// TODO
+		//Java
+		this.velos.add(velo);
+		//Sql
+		//String sqlCommad = "INSERT INTO Location (numCB) VALUES ('"+this.numeroCarteBancaire+"')";
+		Connection conn=TheConnection.getInstance();
 		
+		//Statement stmt = conn.createStatement();
+		//stmt.executeUpdate(sqlCommad, Statement.RETURN_GENERATED_KEYS);
 	}
 	
 	/*
@@ -192,8 +192,25 @@ public class Location {
 	 * et le retourne
 	 * */
 	public int calculNbVelo() {
-		// TODO
-		return 0;
+		int nbVelo = 0;
+		
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+		
+		//Sql commande
+		String sqlCommad = "SELECT COUNT(*) FROM LocationsDetail WHERE (idLocations = "+this.idLocations+");";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				nbVelo = resultat.getInt("nbVelo");
+			}
+			return nbVelo;
+		}
+		catch (SQLException e){
+			return nbVelo;
+		}
 	}
 	
 	/*
@@ -220,8 +237,8 @@ public class Location {
 	 * Met à jour le prix de la location du velo la base de donnèe
 	 */
 	public double calculPrixVelo(int idVelo) {
-		// TODO
-		return 0;
+		return 26;
+		//TODO
 
 	}
 	
@@ -237,14 +254,8 @@ public class Location {
 		prix = 0.0;
 		for (Velo velo : velos) {
 			prix += calculPrixVelo(velo.getIdVelo());
-			// TODO
 		}
 
-	}
-
-	public void editSplitLocation() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 

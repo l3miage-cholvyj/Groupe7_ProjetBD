@@ -220,7 +220,7 @@ public class Abonne {
 				this.idAbonne = resultat.getInt("id");
 			}
 			
-			System.out.println("-<"+this.idAbonne+"/"+this.idClient);
+			//System.out.println("-<"+this.idAbonne+"/"+this.idClient);
 			
 		} 
 		catch (SQLException e) {
@@ -234,8 +234,8 @@ public class Abonne {
 	 * Affiche toutes les informations de l'objet courant
 	 * Travailler l'affichage si possible
 	 * 	exemple:
-	 * 		nom: XXX prénom : XXX
-	 * 		age: XXX ans
+	 * 		nom: XX prénom : XX
+	 * 		age: XX ans
 	 * 
 	 */
 	public void showProfil() {
@@ -253,12 +253,11 @@ public class Abonne {
 	 * Modifie les informations de l'objet courant
 	 * [Sql]
 	 * Met à jour dans la base de donnè l' abonne en utilisant les valeurs de l'objet courant
-	 * 
 	 * Note: version bourain on supprime l'abonneCourant et en recrée un nouveau
 	 * 
 	 */
 	public void editProfil() {
-		// TODO Auto-generated method stub
+		// TODO
 		
 	}
 	
@@ -272,20 +271,40 @@ public class Abonne {
 	 * Affiche toutes les informations de l'objet courant
 	 * Travailler l'affichage si possible
 	 * 	exemple:
-	 * 		Location N° XXX Prix: XXX
+	 * 		Location N° XX Prix: XX
 	 * 		détail:
-	 * 			du XXX/XXX/XXX au XXX/XXX/XXX
+	 * 			du XX/XX/XXXX au XX/XX/XXXX
 	 * 			avec les vélos :
-	 * 					id velo: XXX
+	 * 					id velo: XX
 	 * 		
-	 * 		Location N° XXX Prix: XXX
+	 * 		Location N° XX Prix: XX
 	 * 		détail:
-	 * 			du XXX/XXX/XXX au XXX/XXX/XXX
+	 * 			du XX/XX/XXXX au XX/XX/XXXX
 	 * 			avec les vélos :
-	 * 					id velo: XXX
+	 * 					id velo: XX
 	 */
 	public void showHistorique() {
-		// TODO Auto-generated method stub
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+				
+		//Sql commande
+		String sqlCommad = "SELECT * FROM Locations;";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+					
+			Location location;
+					
+			while (resultat.next()) {
+				System.out.println("Location N° "+resultat.getInt("IdLocations")+":");
+				location = new Location();
+				location.shownLocationIdLocations();
+			}
+		}
+		catch (SQLException e){
+			System.out.println("SQL Erreur");
+		}
 		
 	}
 	
@@ -295,8 +314,26 @@ public class Abonne {
 	 * de l'abonné et le retourne
 	 */
 	public int calculNbLocation() {
-		// TODO
-		return 0;
+		int nbLocation = 0;
+		
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+		
+		//Sql commande
+		String sqlCommad = "SELECT COUNT(*) AS nbLocations  FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (fini = 0 and idAbonne = "+this.idAbonne+");";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				nbLocation = resultat.getInt("nbLocations");
+			}
+			return nbLocation;
+		}
+		catch (SQLException e){
+			return 0;
+		}
+
 	}
 	
 	/* [Sql]
@@ -308,8 +345,31 @@ public class Abonne {
 	 * 
 	 */
 	public Location getLocation(int indexLocation) {
-		// TODO
-		return null;
+		Location location = new Location();
+
+		int nbLocations = calculNbLocation();
+		
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+		
+		//Sql commande
+		String sqlCommad = "SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (idAbonne = "+this.idAbonne+");";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			for (int i = 0; i < nbLocations;i++) {
+				resultat.next();
+			}
+			
+			location.shownLocationIdLocations();
+			
+			return location;
+			
+		}
+		catch (SQLException e){
+			return location;
+		}
 	}
 	
 	/*[Sql]
@@ -319,35 +379,30 @@ public class Abonne {
 		 *  (2)-> location n°2 /dateDébut/
 	 */
 	public void showLocation() {
-		// TODO
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+		
+		//Sql commande
+		String sqlCommad = "SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (fini = 0 and idAbonne = "+this.idAbonne+");";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			
+			Location location;
+			
+			while (resultat.next()) {
+				System.out.println("Location N° "+resultat.getInt("IdLocations")+":");
+				location = new Location();
+				location.shownLocationIdLocations();
+			}
+			
+		}
+		catch (SQLException e){
+			System.out.println("SQL Erreur");
+		}
 		
 	}
 
-	
-	//public Abonne(String nomAbonne, String codeSecretAbonne) {
-		// TODO Auto-generated constructor stub
-	//}
-
-	/*Crée une nouvelle instance d'abonne et la retourne
-	* Inscrit cette instance dans la base de donnée
-	*/
-	/*public void newAbonne() {
-		//TODO
-		System.out.println( "---------------------------------" );
-		System.out.println( "Création d'un abonnée");
-		System.out.println( "Veuillez entrer votre: ");
-		System.out.println( "nom: ");inter.demandeString();
-		System.out.println( "prénom: ");inter.demandeString();
-		System.out.println( "N° de CB: ");inter.demandeCarteBancaire();
-		System.out.println( "Date de naissance: ");inter.demandeDate();
-		System.out.println( "Sexe [F,H]: ");inter.demandeSexe();
-		System.out.println( "Définir un code secret: ");inter.demandeCodeSecret();
-		System.out.println( "");
-			
-		System.out.println( "Félicitaions vous êtes abonnèes");
-		System.out.println( "");
-		
-		
-	}*/
 
 }

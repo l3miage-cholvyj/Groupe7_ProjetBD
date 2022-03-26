@@ -682,7 +682,7 @@ public class Interface {
 		System.out.println( "---------------------------------" );
 		System.out.println( "Nombre de velo à rendre: "+locationCourante.calculNbVelo());
 		veloCourant = new Velo();
-		veloCourant.loadVeloFirstFromLocation(locationCourante.getIdLocation());
+		veloCourant.loadVeloFirstFromLocation(locationCourante.getIdLocations());
 		int id = veloCourant.getIdVelo();
 		Model model = veloCourant.getModeleVelo();
 		int idBornette = stationCourante.getFirstIdBornetteLibre();
@@ -713,7 +713,7 @@ public class Interface {
 	public static void InterfaceP36() {
 		if (abonneCourant.calculNbLocation() > 0) {
 			System.out.println( "---------------------------------" );
-			locationCourante.editSplitLocation();
+			//locationCourante.editSplitLocation();
 			locationCourante.calculPrixLocation();
 			System.out.println( "Votre location vous a coûté:"+locationCourante.getPrix()+"€");
 			System.out.println( "Merci d'avoir utilisé Vé Pick");

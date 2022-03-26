@@ -111,7 +111,7 @@ public class Station {
 			while (resultat.next()) {
 				idBornette = resultat.getInt(idBornette);
 			}
-			return idBornette;
+			return idBornette; 
 			
 		} 
 		catch (SQLException e) {
@@ -131,7 +131,6 @@ public class Station {
 	 */
 	public int getFirstIdBornetteLibre() {
 		int idBornette = 0;
-		String modelVelo;
 
 		//SQL
 		Connection conn=TheConnection.getInstance();

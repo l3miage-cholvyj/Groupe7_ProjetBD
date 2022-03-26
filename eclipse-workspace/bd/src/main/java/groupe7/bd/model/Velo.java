@@ -1,9 +1,13 @@
 package groupe7.bd.model;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import groupe7.bd.*;
+import groupe7.bd.utils.TheConnection;
 
 public class Velo {
 	//Attributs
@@ -66,11 +70,26 @@ public class Velo {
 	 * Intteroge la base de donnèe pour rècupèrer les valeurs du velo "idVelo".
 	 * [Java]
 	 * Met à jour les valeur de l'objet courant
-	 *
 	 */
 	public void loadVelo(int idVelo) {
-		// TODO
 		
+		try {
+			//SQL
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			
+			//Sql commande
+			String sqlCommad = "SELECT * FROM Velo WHERE (idVelo = "+idVelo+")";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				//JAVA
+				this.idVelo = resultat.getInt("idVelo");
+			}	
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	//Fonctions applications
@@ -79,10 +98,27 @@ public class Velo {
 	 * de la location id location.
 	 * [Java]
 	 * Met à jour les valeur de l'objet courant
-	 *
 	 */
 	public void loadVeloFirstFromLocation(int idLocation) {
-		// TODO
+		try {
+			//SQL
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			
+			//Sql commande
+			String sqlCommad = "SELECT * FROM LocationsDetail WHERE (idLocations = "+idLocation+") LIMIT 1";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				//JAVA
+				this.idVelo = resultat.getInt("idVelo");
+			}
+			loadVelo(this.idVelo);
+				
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 
