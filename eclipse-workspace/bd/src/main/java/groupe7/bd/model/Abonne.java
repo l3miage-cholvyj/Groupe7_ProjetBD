@@ -149,24 +149,30 @@ public class Abonne {
 	 * Enregistre dans la base de donnè de nouvelle abonne en utilisant les valeurs de l'objet courant
 	 */
 	public void SaveNewAbonne() {
-		//debut des demandes user [Java] déja revu par Khoi et Marez TODO
 		System.out.println( "Création d'un abonnée");
 		System.out.println( "Veuillez entrer votre: ");
-		System.out.println( "nom: ");inter.demandeString();
-		System.out.println( "prénom: ");inter.demandeString();
-		System.out.println( "N° de CB: ");inter.demandeCarteBancaire();
-		System.out.println( "Date de naissance: ");inter.demandeDate();
-		System.out.println( "Sexe [F,H]: ");inter.demandeSexe();
-		System.out.println( "Définir un code secret: ");inter.demandeCodeSecret();
+		System.out.println( "nom: ");
+		this.nom = Interface.demandeString();
+		System.out.println( "prénom: ");
+		this.prenom = Interface.demandeString();
+		System.out.println( "N° de CB: ");
+		this.numeroCarteBancaire = Interface.demandeCarteBancaire();
+		System.out.println( "Date de naissance: ");
+		this.dateDeNaissance = Interface.demandeDate();
+		System.out.println( "Sexe [F,H]: ");
+		this.sexe = Interface.demandeSexe();
+		System.out.println( "Définir un code secret: ");
+		this.codeSecret = Interface.demandeCodeSecret();
 		System.out.println( "");
+		
+		this.dateDAbonnement = Interface.now();
+		
 			
 		System.out.println( "Félicitaions vous êtes abonnèes");
 		System.out.println( "");
 		
-		//Pour fixer les valeurs dans les attributs utiliser this.nom = ... ou si ça marche pas les setteurs
-		//Khoi Marez ici mettre votre code du constructeur Abonne(avec les arguments)
-		
 		//[SQL] TODO
+		
 		
 	}
 	

@@ -38,3 +38,7 @@ SELECT * FROM Velo LEFT JOIN Bornette USING (idBornette) WHERE (idStation = 1 an
 SELECT * FROM Velo RIGHT JOIN Bornette USING (idBornette) WHERE (idStation = 1 and etatBornette = 'ok' and idVelo is  NULL) LIMIT 1;
 
 /*Retourne tous les vélos d'une locations X*/
+
+/*Crée un abonne*/
+INSERT INTO Abonne (idClient,nom,prenom,dateNaissance,sexe,dateAbonnement,codeSecret) VALUES (8,"FONTAINE","Marc","1997-07-27","h","2022-04-07","9645");
+

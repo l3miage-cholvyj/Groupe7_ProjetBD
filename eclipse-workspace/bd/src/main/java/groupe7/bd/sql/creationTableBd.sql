@@ -33,12 +33,12 @@ create table Velo (
 );
 
 create table Client(
-	idClient int primary key,
+	idClient int AUTO_INCREMENT primary key,
 	numCB varchar(16)
 );
 
 create table Abonne(
-	idAbonne int primary key,
+	idAbonne int AUTO_INCREMENT primary key,
 	idClient int,
 	nom varchar(20),
 	prenom varchar(20),
@@ -51,7 +51,7 @@ create table Abonne(
 );
 
 create table Locations(
-	idLocations int primary key,
+	idLocations int AUTO_INCREMENT primary key,
 	idClient int,
 	prix float,	
 	codeSecret integer,
@@ -59,7 +59,7 @@ create table Locations(
 );
 
 create table LocationsDetail(
-	idLocationsDetail int primary key,
+	idLocationsDetail int AUTO_INCREMENT primary key,
 	idVelo int,
 	debut datetime,
 	fin datetime,
