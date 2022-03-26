@@ -39,6 +39,32 @@ public class Bornette {
 	 *
 	 */
 	public void loadBornette(int idBornette) {
+		
+		try {
+			//SQL
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			
+			//Sql commande
+			String sqlCommad = "SELECT * FROM Bornette  WHERE (idBornette = "+idBornette+")";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				//JAVA
+				this.idBornette = resultat.getInt("idBornette");
+				String etat;
+				etat = resultat.getString("etatBornette");
+				if(etat.equals("hs"))
+				this.etatBornette=Etat.Hs;
+				else
+				this.etatBornette=Etat.Ok;
+			}
+				
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 		// TODO
 		
 	}
