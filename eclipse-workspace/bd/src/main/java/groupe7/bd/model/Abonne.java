@@ -349,54 +349,5 @@ public class Abonne {
 		
 		
 	}*/
-	
-	
-	
-	/*Recherche dans la base de donnée l'abonné correspondant aux paramètres
-	 *et le retourne.
-	 *Renvoie null si aucun abonné ne correspond aux paramètres
-	 */
-	public Abonne connectionAbonne(String nomAbonne, String codeSecretAbonne) {
-		//TODO
-		return null;
-	}
-	
-	/*Affiche toutes les informations de l'abonné
-	*/
-	public void getInformation() {
-		//TODO	
-	}
-
-	/*Modifie les informations de l'abonné
-	*/
-	public void Edit() {
-		// TODO
-	}
-
-	/* Crée une nouvelle instance de location
-	 * et l'associe à l'abonné courant.
-	 * Inscrire cette location dans la base de donnée
-	 */
-	public void newLocation() {
-		// TODO
-	}
-	
-	/* Crée une nouvelle instance de location
-	 * et l'associe à l'abonné courant (null).
-	 * Inscrire cette location dans la base de donnée
-	 * avec le codeSecret
-	 */
-	public void newLocation(String codeSecret) {
-		// TODO
-	}
-
-	/*Interoge la base de donnèe pour savoir
-	 *  si le le code secret et celui d'un abonné 
-	 * annonyme
-	 */
-	public boolean verifCode(int demandeCodeSecret) {
-		// TODO
-		return false;
-	}
 
 }
