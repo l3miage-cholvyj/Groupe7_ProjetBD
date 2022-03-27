@@ -33,7 +33,7 @@ public class Interface {
 	//Tableau des idPages
 	private static int tabIdPage[][] ={
 			//{idPage,idPageSuivant(1->),idPageSuivant(2->),...}
-			{0,11,12,21,31,-1,-1,-1,-1,-1},
+			{0,11,12,21,31,40,-1,-1,-1,-1},
 			{10,13,22,33,16,15,0,-1,-1,-1},
 			{13,10,14,-1,-1,-1,-1,-1,-1,-1},
 			{21,18,22,-1,-1,-1,-1,-1,-1,-1},
@@ -371,6 +371,7 @@ public class Interface {
 		System.out.println( "(2)->Créer un compte" );
 		System.out.println( "(3)->Prendre un vélo" );
 		System.out.println( "(4)->Rendre un vélo" );
+		System.out.println( "(5)->Affichage Table" );
 	}
 	
 	/*
@@ -716,6 +717,139 @@ public class Interface {
 		
 	}
 	
+	//Affichage Table
+	public  void InterfaceP40(){
+		try {
+			//Sql commande
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			String sqlCommad = "SELECT * FROM Station";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			System.out.println("+STATION------------------------------------------------------------------------------------------+");
+			System.out.println("|+idStation+\t+adresse+\t+statu+\t|");
+			while (resultat.next()) {
+				System.out.println("|"+resultat.getString("idStation")+"\t"+resultat.getString("adresse")+"\t"+resultat.getString("statu")+"\t|");
+			}
+			System.out.println("+---------------------------------------------------------------------------------------------+");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		try {
+			//Sql commande
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			String sqlCommad = "SELECT * FROM Bornette";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			System.out.println("+Bornette-----------------------------------------------------------------------------------------+");
+			System.out.println("|+idBornette+\t+idStation+\t+etatBornette+\t|");
+			while (resultat.next()) {
+				System.out.println("|"+resultat.getString("idBornette")+"\t"+resultat.getString("idStation")+"\t"+resultat.getString("etatBornette")+"\t|");
+			}
+			System.out.println("+---------------------------------------------------------------------------------------------+");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			//Sql commande
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			String sqlCommad = "SELECT * FROM Velo";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			System.out.println("+Velo------------------------------------------------------------------------------------------+");
+			System.out.println("|+idVelo+\t+idBornette+\t+etatBornette+\t+dateMenS\t|");
+			while (resultat.next()) {
+				System.out.println("|"+resultat.getString("idVelo")+"\t"+resultat.getString("idBornette")+"\t"+resultat.getString("modelVelo")+"\t"+resultat.getString("dateMenS")+"\t|");
+			}
+			System.out.println("+---------------------------------------------------------------------------------------------+");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			//Sql commande
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			String sqlCommad = "SELECT * FROM Client";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			System.out.println("+Client------------------------------------------------------------------------------------------+");
+			System.out.println("|+idClient+\t+numCB+\t|");
+			while (resultat.next()) {
+				System.out.println("|"+resultat.getString("idClient")+"\t"+resultat.getString("numCB")+"\t|");
+			}
+			System.out.println("+---------------------------------------------------------------------------------------------+");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			//Sql commande
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			String sqlCommad = "SELECT * FROM Abonne";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			System.out.println("+Abonne------------------------------------------------------------------------------------------+");
+			System.out.println("|+idAbonne+\t+idClient+\t+nom+\t+dateMenS\t|");
+			System.out.println("|+dateNaissance+\t+idClient+\t+dateAbonnement+\t+codeSecret\t|");
+			
+			while (resultat.next()) {
+				System.out.println("|"+resultat.getString("idAbonne")+"\t"+resultat.getString("idClient")+"\t"+resultat.getString("nom")+"\t"+resultat.getString("prenom")+"\t|");
+				System.out.println("|"+resultat.getString("dateNaissance")+"\t"+resultat.getString("sexe")+"\t"+resultat.getString("dateAbonnement")+"\t"+resultat.getString("codeSecret")+"\t|");
+			}
+			System.out.println("+---------------------------------------------------------------------------------------------+");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			//Sql commande
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			String sqlCommad = "SELECT * FROM Locations";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			System.out.println("+Locations------------------------------------------------------------------------------------------+");
+			System.out.println("|+idLocations+\t+idClient+\t+prix+\t+codeSecret\t+fini\t|");
+			while (resultat.next()) {
+				System.out.println("|"+resultat.getString("idLocations")+"\t"+resultat.getString("idClient")+"\t"+resultat.getString("prix")+"\t"+resultat.getString("codeSecret")+"\t"+resultat.getString("fini")+"\t|");
+			}
+			System.out.println("+---------------------------------------------------------------------------------------------+");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			//Sql commande
+			Connection conn=TheConnection.getInstance();
+			java.sql.Statement requete;
+			String sqlCommad = "SELECT * FROM LocationsDetail";
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			System.out.println("+LocationsDetail------------------------------------------------------------------------------------------+");
+			System.out.println("|+idLocationsDetail+\t+idLocations+\t+idVelo+\t+debut\t|");
+			System.out.println("|+fin+\t+depart+\t+arrivee+\t+prix\t+fini\t|");
+			
+			while (resultat.next()) {
+				System.out.println("|"+resultat.getString("idLocationsDetail")+"\t"+resultat.getString("idLocations")+"\t"+resultat.getString("idVelo")+"\t"+resultat.getString("debut")+"\t|");
+				System.out.println("|"+resultat.getString("fin")+"\t"+resultat.getString("depart")+"\t"+resultat.getString("arrivee")+"\t"+resultat.getString("prix")+"\t"+resultat.getString("fini")+"\t|");
+			}
+			System.out.println("+---------------------------------------------------------------------------------------------+");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		Interface(0);
+	}
+	
+	
 	
 	//Page d'erreur
 	public void 	InterfaceErr() {
@@ -755,6 +889,8 @@ public class Interface {
 			case 34: InterfaceP34();break;
 			case 35: InterfaceP35();break;
 			case 36: InterfaceP36();break;
+				
+			case 40: InterfaceP36();break;
 			
 			default: InterfaceErr();
 		}
