@@ -136,8 +136,12 @@ public class Interface {
 	* Convertie une date JAVA au format date SQL
 	*/
 	public static String convDateJAVAToSQL(Date dateJava) {
-		SimpleDateFormat SQL_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return SQL_format.format(dateJava);
+		try{
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(dateJava);
+		}
+		catch(Exception e){
+			return null;
+		}
 	}
 	
 	/*
@@ -251,7 +255,7 @@ public class Interface {
 		Scanner scanner = new Scanner(System.in);
 		String sexe = "";
 
-		while(sexe.equals("H") == false && sexe.equals("F") == false){
+		while(sexe.equals("h") == false && sexe.equals("f") == false){
 			System.out.println("Veuillez saisir H (pour Homme) ou F (pour Femme)");
 			sexe = scanner.nextLine();
 		}
@@ -524,6 +528,8 @@ public class Interface {
 		String numCB = demandeCarteBancaire();
 		String codeSecret = genererCodeSecret();
 		System.out.println( "Votre code secret est: "+codeSecret);
+
+		locationCourante = new Location();
 		locationCourante.editLocationAnonyme(numCB, codeSecret);
 		attentAppuieTouche();
 		Interface(23);	
@@ -544,7 +550,8 @@ public class Interface {
 	 * Page de vérification de l'existence d'un vélo model Manuel
 	 */
 	public  void InterfaceP24() {
-		int idBornette = stationCourante.veloExiste(Model.Manuel);
+		int idBornette = stationCourante.veloExiste(Model.manuel);
+		
 		bornetteCourante = new Bornette();
 		bornetteCourante.loadBornette(idBornette);
 		if(bornetteCourante == null) {
@@ -553,7 +560,7 @@ public class Interface {
 		}
 		else {
 			veloCourant = new Velo();
-			veloCourant.loadVelo(bornetteCourante.getIdBornette());
+			veloCourant.loadVeloFromBornette(bornetteCourante.getIdBornette());
 			Interface(26);
 		}
 	}
@@ -562,7 +569,7 @@ public class Interface {
 	 * Page de vérification de l'existence d'un vélo model Electrique
 	 */
 	public  void InterfaceP25() {
-		int idBornette = stationCourante.veloExiste(Model.Electrique);
+		int idBornette = stationCourante.veloExiste(Model.electrique);
 		bornetteCourante = new Bornette();
 		bornetteCourante.loadBornette(idBornette);
 		if(bornetteCourante == null) {
@@ -571,7 +578,8 @@ public class Interface {
 		}
 		else {
 			veloCourant = new Velo();
-			veloCourant.loadVelo(bornetteCourante.getIdBornette());
+			veloCourant.loadVeloFromBornette(bornetteCourante.getIdBornette());
+			
 			Interface(26);
 		}
 	}
@@ -580,6 +588,7 @@ public class Interface {
 	public  void InterfaceP26() {
 		System.out.println( "---------------------------------" );
 		veloCourant.setIdBornette(0);
+
 		sousLocationCourant = new LocationsDetail();
 		sousLocationCourant.saveLocationDetail();
 		locationCourante.editLocationStart(sousLocationCourant);

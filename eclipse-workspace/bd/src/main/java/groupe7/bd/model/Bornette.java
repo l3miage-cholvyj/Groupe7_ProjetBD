@@ -12,13 +12,7 @@ public class Bornette {
 	private int idBornette;
 	private Etat etatBornette;
 	
-	//Constructeurs
 	
-	/*
-	public Bornette (int idBornette,Etat etatBornette){
-        this.idBornette=idBornette;
-		  this.etatBornette=etatBornette;
-	}*/
 
 	//getters et setters
     public int getIdBornette(){
@@ -51,19 +45,15 @@ public class Bornette {
 			java.sql.Statement requete;
 			
 			//Sql commande
-			String sqlCommad = "SELECT * FROM Bornette  WHERE (idBornette = "+idBornette+")";
+			String sqlCommand = "SELECT * FROM Bornette  WHERE (idBornette = "+idBornette+")";
 			requete = conn.createStatement();
-			ResultSet resultat = requete.executeQuery(sqlCommad);
-			while (resultat.next()) {
-				//JAVA
-				this.idBornette = resultat.getInt("idBornette");
-				String etat;
-				etat = resultat.getString("etatBornette");
-				if(etat.equals("hs"))
-				this.etatBornette=Etat.Hs;
-				else
-				this.etatBornette=Etat.Ok;
-			}
+			ResultSet resultat = requete.executeQuery(sqlCommand);
+
+			//JAVA
+			resultat.next();
+			this.idBornette = resultat.getInt("idBornette");
+			this.etatBornette = Etat.valueOf(resultat.getString("etatBornette"));
+				
 			//fermeture des descripteurs 
 			requete.close();
 			resultat.close();

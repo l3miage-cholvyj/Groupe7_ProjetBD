@@ -63,10 +63,10 @@ public class Client {
 				
 		//Sql commande
 		//System.out.println("->"+this.idClient);
-		String sqlCommad = "SELECT * FROM Locations WHERE (idClient = "+this.idClient+");";
+		String sqlCommand = "SELECT * FROM Locations WHERE (idClient = "+this.idClient+");";
 		try {
 			requete = conn.createStatement();
-			ResultSet resultat = requete.executeQuery(sqlCommad);
+			ResultSet resultat = requete.executeQuery(sqlCommand);
 					
 			Location location;
 					
@@ -101,10 +101,10 @@ public class Client {
 					
 			//Sql commande
 			//System.out.println("->"+this.idClient);
-			String sqlCommad = "SELECT * FROM Locations WHERE (idClient = "+this.idClient+" && fini = 0);";
+			String sqlCommand = "SELECT * FROM Locations WHERE (idClient = "+this.idClient+" && fini = 0);";
 			try {
 				requete = conn.createStatement();
-				ResultSet resultat = requete.executeQuery(sqlCommad);
+				ResultSet resultat = requete.executeQuery(sqlCommand);
 						
 				Location location;
 						
@@ -135,10 +135,10 @@ public class Client {
 			java.sql.Statement requete;
 			
 			//Sql commande
-			String sqlCommad = "SELECT COUNT(*) AS nbLocations  FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (fini = 0 and idClient = "+this.idClient+");";
+			String sqlCommand = "SELECT COUNT(*) AS nbLocations  FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (fini = 0 and idClient = "+this.idClient+");";
 			try {
 				requete = conn.createStatement();
-				ResultSet resultat = requete.executeQuery(sqlCommad);
+				ResultSet resultat = requete.executeQuery(sqlCommand);
 				while (resultat.next()) {
 					nbLocation = resultat.getInt("nbLocations");
 				}
@@ -165,10 +165,10 @@ public class Client {
 			java.sql.Statement requete;
 			
 			//Sql commande
-			String sqlCommad = "SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (idClient = "+this.idClient+");";
+			String sqlCommand = "SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient) WHERE (idClient = "+this.idClient+");";
 			try {
 				requete = conn.createStatement();
-				ResultSet resultat = requete.executeQuery(sqlCommad);
+				ResultSet resultat = requete.executeQuery(sqlCommand);
 				for (int i = 0; i < indexLocation;i++) {
 					resultat.next();
 				}
