@@ -207,7 +207,7 @@ public class Location {
 		java.sql.Statement requete;
 
 		// Sql commande
-		String sqlCommand = "SELECT COUNT(*) FROM LocationsDetail WHERE (codeSecret = " + codeSecret + ");";
+		String sqlCommand = "SELECT * FROM Locations WHERE (codeSecret = " + codeSecret + ");";
 		try {
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommand);
@@ -234,7 +234,7 @@ public class Location {
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommand);
 			while (resultat.next()) {
-				LocationsDetail location = new LocationsDetail();
+				LocationsDetail location = new LocationsDetail(0);
 				location.loadLocationIdLocations(resultat.getInt("idLocationsDetail"));
 				this.velos.add(location);
 			}

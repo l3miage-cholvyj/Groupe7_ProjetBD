@@ -35,6 +35,18 @@ public class LocationsDetail {
 		this.depart = inter.stationCourante.getIdStation();
 		this.debut = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
 	}
+	
+	//Remplace le construteur par défaut
+	public LocationsDetail(int rien) {
+		this.idLocationsDetails = 0;
+		this.idLocations = 0;
+		this.idVelo = 0;
+		this.prix = 0.0;
+		this.depart = 0;
+		this.arrivee = 0;
+		this.debut = null;
+		this.fin = null;
+	}
 
 	// Fonctions applications
 
@@ -72,7 +84,7 @@ public class LocationsDetail {
 			java.sql.Statement requete;
 
 			// Sql commande
-			String sqlCommad = "SELECT * FROM LocationsDetail  WHERE (idLocationsDetails = " + idLocationsDetail + ")";
+			String sqlCommad = "SELECT * FROM LocationsDetail  WHERE (idLocationsDetail = " + idLocationsDetail + ")";
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommad);
 			while (resultat.next()) {

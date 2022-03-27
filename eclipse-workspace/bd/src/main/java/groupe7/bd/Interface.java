@@ -627,7 +627,7 @@ public class Interface {
 	 */
 	public  void InterfaceP31() {
 		System.out.println( "---------------------------------" );
-		System.out.println( "Emprunter des vélos:");
+		System.out.println( "Dépot des vélos:");
 		System.out.println( "(1)->Vous connecter");
 		System.out.println( "(2)->Sans connexion" );
 	}
@@ -659,7 +659,7 @@ public class Interface {
 		int nbLocations = clientCourant.calculNbLocationEnCours();
 		int indexLocation = demandeInt(1,nbLocations);
 		locationCourante =  clientCourant.getLocation(indexLocation);
-		sousLocationCourant = new LocationsDetail();
+		sousLocationCourant = new LocationsDetail(0);
 		sousLocationCourant = locationCourante.getVelos().get(0);
 		
 		Interface(34);
@@ -667,6 +667,8 @@ public class Interface {
 		
 	//Remise de velo
 	public  void InterfaceP34() {
+		sousLocationCourant = new LocationsDetail(0);
+		sousLocationCourant = locationCourante.getVelos().get(0);
 		System.out.println( "---------------------------------" );
 		System.out.println( "Nombre de velo à rendre: "+locationCourante.calculNbVelo());
 		veloCourant = new Velo();
