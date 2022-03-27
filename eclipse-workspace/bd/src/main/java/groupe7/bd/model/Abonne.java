@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -188,7 +190,7 @@ public class Abonne {
 		this.codeSecret = inter.demandeCodeSecret();
 		System.out.println( "");
 		
-		this.dateDAbonnement = inter.now();
+		this.dateDAbonnement = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());;
 		System.out.print(dateDAbonnement);
 		String dateDAbonnementSQL = inter.convDateJAVAToSQL(this.dateDAbonnement);
 		

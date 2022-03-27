@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
@@ -131,6 +132,39 @@ public class Interface {
 			
 		}
 		
+	/*
+	* Convertie une date JAVA au format date SQL
+	*/
+	public static String convDateJAVAToSQL(Date dateJava) {
+		SimpleDateFormat SQL_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return SQL_format.format(dateJava);
+	}
+	
+	/*
+	 * Convertie une date SQL au format date JAVA
+	*/
+	public static Date convDateSQLToJAVA(String dateStr) {
+		try{
+			return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(dateStr);
+		}
+        catch(Exception e){
+			return null;
+		}
+	}
+	
+	/*
+	 * Convertie une chaîne de caractère de format (dd/MM/yyyy HH:mm:ss.SS) en une date
+	 * et la retourne.
+	*/
+	public static Date dateStrConv(String dateStr) {
+		try{
+			return new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
+		}
+        catch(Exception e){
+			return null;
+        }
+	}
+		
 	
 	/*
 	 * Retourne un entier en un string de length taille
@@ -223,90 +257,6 @@ public class Interface {
 		}
 		//scanner.close();
 		return Sexe.valueOf(sexe);
-	}
-	
-	/*
-	 * Convertie une date JAVA au format date SQL
-	*/
-	public static String convDateJAVAToSQLOLD(Date dateJava) {
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.00");    
-		String dateToStr = dateFormat.format(dateJava);
-		return dateToStr;
-		
-	}
-	
-	/*
-	 * Convertie une date SQL au format date JAVA
-	*/
-	public static Date convDateSQLToJAVAOLD(String dateStr) {
-		if (dateStr == null) {
-			return null;
-		}
-		
-		//Patherne SQL: AAAA-MM-JJ hh:mm:ss
-		//Patherne JAVA: dd/MM/yyyy HH:mm:ss.SS
-		
-		char a1 = dateStr.charAt(0);
-		char a2 = dateStr.charAt(1);
-		char a3 = dateStr.charAt(2);
-		char a4 = dateStr.charAt(3);
-		
-		char m1 = dateStr.charAt(5);
-		char m2 = dateStr.charAt(6);
-		
-		char j1 = dateStr.charAt(8);
-		char j2 = dateStr.charAt(9);
-		
-		char h1 = dateStr.charAt(11);
-		char h2 = dateStr.charAt(12);
-		
-		char mm1 = dateStr.charAt(14);
-		char mm2 = dateStr.charAt(15);
-		
-		char s1 = dateStr.charAt(17);
-		char s2 = dateStr.charAt(18);
-		
-		return dateStrConv(j1+""+j2+"/"+m1+m2+"/"+a1+a2+a3+a4+" "+h1+h2+":"+mm1+mm2+":"+s1+s2+".00");
-	}
-	
-	
-	/*
-	 * Convertie une chaîne de caractère de format (dd/MM/yyyy HH:mm:ss.SS) en une date
-	 * et la retourne.
-	*/
-	public static Date dateStrConv(String dateStr) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
-		//System.out.println("->"+dateStr);
-		Date date;
-		try {
-			date = sdf.parse(dateStr);
-		} 
-		catch (ParseException e) {
-			return null;
-			//e.printStackTrace();
-		}
-	    return date;
-	}
-	
-	/*
-	 * Renvoie la date et l'heure du jour. 
-	*/
-	public static Date nowOLD() {
-		try {
-			Calendar cal = Calendar.getInstance();
-			SimpleDateFormat sdf1 = new SimpleDateFormat();
-			sdf1.applyPattern("dd/MM/yyyy HH:mm:ss.SS");
-			String strDate = sdf1.format(cal.getTime());
-			Date dateDuJour;
-			dateDuJour = sdf1.parse(strDate);
-			return dateDuJour;
-		} catch (ParseException e) {
-			return null;
-			//e.printStackTrace();
-		}
-	    
-		
 	}
 	
 	/*

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -332,7 +334,7 @@ public class Location {
 	 * */
 	public void editLocationStart(LocationsDetail sousLocation) {
 		//JAVA
-		sousLocation.setDebut(inter.now());
+		sousLocation.setDebut(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 		
 		//Sql
 		try {
@@ -360,7 +362,7 @@ public class Location {
 	 * */
 	public void editLocationEnd(LocationsDetail sousLocation) {
 		//JAVA
-		sousLocation.setFin(inter.now());
+		sousLocation.setFin(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
 		sousLocation.setFini(true);
 		
 		//Sql
