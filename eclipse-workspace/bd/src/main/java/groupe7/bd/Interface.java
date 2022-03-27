@@ -890,7 +890,7 @@ public class Interface {
 			case 35: InterfaceP35();break;
 			case 36: InterfaceP36();break;
 				
-			case 40: InterfaceP36();break;
+			case 40: InterfaceP40();break;
 			
 			default: InterfaceErr();
 		}
