@@ -58,4 +58,14 @@ INSERT INTO Abonne (idClient,nom,prenom,dateNaissance,sexe,dateAbonnement,codeSe
 /*Retourne les locations avec les informations du propriètaires */
 SELECT * FROM Locations NATURAL JOIN Client LEFT JOIN Abonne USING (idClient);
 
+/*Ajoute un velo à une location x*/
+INSERT INTO LocationsDetail (idLocations,idVelo,prix,depart,arrivee,debut,fin,fini) VALUES (1,17,null,1,5,"2022-03-26 18:37:00","2022-03-26 18:39:00",1);
 
+/*Ajoute une location*/
+INSERT INTO Locations (idClient,prix,codeSecret,fini) VALUES (1,null,null,0);
+
+/*Modifie le pris d'une locations*/
+UPDATE Locations SET prix = 18 WHERE (idLocations = 1);
+
+/*Modifie le pris d'une location*/
+UPDATE LocationsDetail SET prix = 18 WHERE (idLocationsDetail = 1);

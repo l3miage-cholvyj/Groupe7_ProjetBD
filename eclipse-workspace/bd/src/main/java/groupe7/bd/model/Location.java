@@ -14,8 +14,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Location {
+	Interface inter;//Permet d'accer au fonction de l'interface
 	private int idLocations;
-	private List<Velo> velos;
+	private int idClient;
+	private List<LocationsDetail> velos;
 	private String codeSecret;
 	private Double prix;
 	private boolean fini;
@@ -23,7 +25,8 @@ public class Location {
 	//contructeur
 	public Location() {
 		this.idLocations = 0;
-		this.velos = new ArrayList<Velo>();
+		this.idClient = 0;
+		this.velos = new ArrayList<LocationsDetail>();
 		this.codeSecret = null;
 		this.prix = 0.0;
 		this.fini = false;
@@ -48,11 +51,11 @@ public class Location {
 		this.idLocations = idLocations;
 	}
 
-	public List<Velo> getVelos() {
+	public List<LocationsDetail> getVelos() {
 		return velos;
 	}
 
-	public void setVelos(List<Velo> velos) {
+	public void setVelos(List<LocationsDetail> velos) {
 		this.velos = velos;
 	}
 
@@ -110,14 +113,13 @@ public class Location {
 		}
 	}
 	
-	/* [Sql]
-	 * Intteroge la base de donnèe pour rècupèrer les valeurs de la location "idLocations".
+	/*
 	 * [Java]
-	 * Met à jour les valeur de l'objet courant
+	 * Affiche la valeur de l'objet courant
 	 */
 	public void shownLocationIdLocations() {
 		System.out.println("Location N°"+this.idLocations);
-		//Affiché vélo TODO
+		for (LocationsDetail LocatationDetail : velos) LocatationDetail.ShowLocation();
 		System.out.println("codeSecret: "+this.codeSecret);
 		System.out.println("prix: "+this.prix);
 		System.out.println("fini :"+this.fini);
@@ -134,17 +136,53 @@ public class Location {
 	 * Met à jour la base de donnèe en créant une location associé à aucun abonné (client sans abonnement)
 	 */
 	public void editLocationAnonyme(String numCB,String codeSecret) {
+		//[Java]
 		//CodeSecret
 		this.codeSecret = codeSecret;
 		
-		//Client
+		//numCB
 		Client clientAnnonyme = new Client();
+		clientAnnonyme.setNumeroCarteBancaire(numCB);
 		
-		//TODO
-		/*
-		clientAnnonyme.getIdClient();	
-		clientAnnonyme.getNumeroCarteBancaire();*/
-		
+		//[Sql]
+		try {
+			String sqlCommad = "INSERT INTO Client (numCB) VALUES ('"+clientAnnonyme.getNumeroCarteBancaire()+"')";
+			Connection conn=TheConnection.getInstance();
+			
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(sqlCommad, Statement.RETURN_GENERATED_KEYS);
+			
+			
+			//retourne l' id client
+			sqlCommad = "SELECT MAX(idClient) AS id FROM Client;";
+			Statement requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			
+			while (resultat.next()) {
+				clientAnnonyme.setIdClient(resultat.getInt("id"));
+				this.idClient = resultat.getInt("id");
+			}
+			
+			//Sql commande new abonne
+			sqlCommad = "INSERT INTO Locations (idClient,prix,codeSecret,fini) VALUES ("
+			+clientAnnonyme.getIdClient()+","+this.prix+",'"+this.codeSecret+"','"+this.fini+"');";
+			stmt = conn.createStatement();
+			
+			//Statement stmt = conn.prepareStatement(sqlCommad, Statement.RETURN_GENERATED_KEYS);
+			stmt.executeUpdate(sqlCommad);
+			
+			//retourne l' id de l'abonne
+			sqlCommad = "SELECT MAX(idLocations) AS id FROM Locations;";
+			requete = conn.createStatement();
+			resultat = requete.executeQuery(sqlCommad);
+			
+			while (resultat.next()) {
+				this.idLocations = resultat.getInt("id");
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*
@@ -153,26 +191,48 @@ public class Location {
 	 * [Sql]
 	 * Met à jour la base de donnèe en créant une location associé à l'abonneId (client avec abonnement)
 	 */
-	public void editLocationAbonne(String numCB,int abonneId) {
-		// TODO
+	public void editLocationAbonne(int idClient) {
+		//[Java]
+		//idClient
+		this.idClient = idClient;
+				
+		//[Sql]
+		try {
+			Connection conn=TheConnection.getInstance();
 		
+			//Sql commande new Locations
+			String sqlCommad = "INSERT INTO Locations (idClient,prix,codeSecret,fini) VALUES ("
+			+this.idClient+","+this.prix+",'"+this.codeSecret+"','"+this.fini+"');";
+			Statement stmt = conn.createStatement();
+					
+			//Statement stmt = conn.prepareStatement(sqlCommad, Statement.RETURN_GENERATED_KEYS);
+			stmt.executeUpdate(sqlCommad);
+					
+			//retourne l' id de la locations
+			sqlCommad = "SELECT MAX(idLocations) AS id FROM Locations;";
+			Statement requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+					
+			while (resultat.next()) {
+					this.idLocations = resultat.getInt("id");
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	/*
 	 * [Java]
-	 * ajoute le velo à list idVelos
+	 * ajoute la location à list idVelos
 	 * [Sql]
 	 * Met à jour la base en ajoutant le velo à la location courante 
 	 */
-	public void editAjouterUnVelo(Velo velo) {
+	public void editAjouterUnVelo(LocationsDetail Location) {
 		//Java
-		this.velos.add(velo);
+		this.velos.add(Location);
 		//Sql
-		//String sqlCommad = "INSERT INTO Location (numCB) VALUES ('"+this.numeroCarteBancaire+"')";
-		Connection conn=TheConnection.getInstance();
-		
-		//Statement stmt = conn.createStatement();
-		//stmt.executeUpdate(sqlCommad, Statement.RETURN_GENERATED_KEYS);
+		Location.saveLocationDetail();
 	}
 	
 	/*
@@ -182,7 +242,47 @@ public class Location {
 	 * Met à jour les valeur de l'objet courant
 	 */
 	public void loadLocationClient(String codeSecret) {
-		// TODO
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+		
+		//Sql commande
+		String sqlCommad = "SELECT COUNT(*) FROM LocationsDetail WHERE (codeSecret = "+codeSecret+");";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+				loadLocationIdLocations(resultat.getInt("idLocations"));
+			}
+		}
+		catch (SQLException e){
+
+		}
+	}
+	
+	/*
+	 * [Sql]
+	 * Intteroge la base de donnèe pour rècupèrer les vélos de la location courante.
+	 * [Java]
+	 * Met à jour les valeur de l'objet courant
+	 */
+	public void loadLocationAllVelo(){
+		//SQL
+		Connection conn=TheConnection.getInstance();
+		java.sql.Statement requete;
+				
+		//Sql commande
+		String sqlCommad = "SELECT COUNT(*) FROM Locations WHERE (codeSecret = "+codeSecret+");";
+		try {
+			requete = conn.createStatement();
+			ResultSet resultat = requete.executeQuery(sqlCommad);
+			while (resultat.next()) {
+									
+			}
+		}
+		catch (SQLException e){
+
+		}
 	}
 	
 	/*
@@ -215,17 +315,58 @@ public class Location {
 	
 	/*
 	 * [Java]
-	 * 1) Retire le veloCourant de velos  
-	 * 2) Si dateFinLocation est null  alors la fixer à now()
-	 * 		On prend l'heur de remise du premier velo pour toutes la location 
+	 * Fixe l'heure de retour de la sousLocations Courante
 	 * 
 	 * [Sql]
-	 * 1) Mettre à jour la location dans la base de donnè 
-	 * 2) Mettre à jour le velo dans la base de donnè (le relier à l'idBornette)
+	 * 1) Mettre à jour la location dans la base de donnè
 	 * 
 	 * */
-	public void editVeloRendu(int idVelo,int idBornette) {
-		// TODO
+	public void editLocationStart(LocationsDetail sousLocation) {
+		//JAVA
+		sousLocation.setDebut(inter.now());
+		
+		//Sql
+		try {
+			Connection conn=TheConnection.getInstance();
+					
+			//Sql commande new Locations
+			String sqlCommad = "UPDATE LocationsDetail SET debut = "+sousLocation.getDebutSQL()+" WHERE (idLocationsDetail = "+sousLocation.getIdLocationsDetails()+")";
+			Statement stmt = conn.createStatement();
+							
+			stmt.executeUpdate(sqlCommad);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/*
+	 * [Java]
+	 * Fixe l'heure de retour de la sousLocations Courante
+	 * 
+	 * [Sql]
+	 * 1) Mettre à jour la location dans la base de donnè
+	 * 
+	 * */
+	public void editLocationEnd(LocationsDetail sousLocation) {
+		//JAVA
+		sousLocation.setFin(inter.now());
+		sousLocation.setFini(true);
+		
+		//Sql
+		try {
+			Connection conn=TheConnection.getInstance();
+					
+			//Sql commande new Locations
+			String sqlCommad = "UPDATE LocationsDetail SET fin = "+sousLocation.getFinSQL()+" WHERE (idLocationsDetail = "+sousLocation.getIdLocationsDetails()+")";
+			Statement stmt = conn.createStatement();
+							
+			stmt.executeUpdate(sqlCommad);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -236,9 +377,25 @@ public class Location {
 	 * [Sql]
 	 * Met à jour le prix de la location du velo la base de donnèe
 	 */
-	public double calculPrixVelo(int idVelo) {
-		return 26;
+	public double calculPrixLocation(LocationsDetail location) {
+		//Java
+		Double calculPrix = 0.0;
 		//TODO
+		location.setPrix(calculPrix);
+		//Sql
+		try {
+			Connection conn=TheConnection.getInstance();
+					
+			//Sql commande new Locations
+			String sqlCommad = "UPDATE LocationsDetail SET prix = "+location.getPrix()+" WHERE (idLocationsDetail = "+location.getIdLocationsDetails()+")";
+			Statement stmt = conn.createStatement();
+							
+			stmt.executeUpdate(sqlCommad);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 17;
 
 	}
 	
@@ -250,10 +407,27 @@ public class Location {
 	 * [Sql]
 	 * Met à jour le pris de la location courante dans la base de donnèe
 	 */
-	public void calculPrixLocation() {
+	public void calculPrixLocations() {
+		//Java
+		
 		prix = 0.0;
-		for (Velo velo : velos) {
-			prix += calculPrixVelo(velo.getIdVelo());
+		for (LocationsDetail location : velos) {
+			calculPrixLocation(location);
+			prix += location.getPrix();
+		}
+		
+		//Sql
+		try {
+			Connection conn=TheConnection.getInstance();
+			
+			//Sql commande new Locations
+			String sqlCommad = "UPDATE Locations SET prix = "+prix+" WHERE (idLocations = "+this.idLocations+");";
+			Statement stmt = conn.createStatement();
+					
+			stmt.executeUpdate(sqlCommad);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 	}

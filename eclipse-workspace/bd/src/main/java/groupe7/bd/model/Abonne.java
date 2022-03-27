@@ -37,6 +37,14 @@ public class Abonne {
 	public void setIdAbonne(int idAbonne) {
 		this.idAbonne = idAbonne;
 	}
+	
+	public int getIdClient() {
+		return idClient;
+	}
+
+	public void setIdClient(int idClient) {
+		this.idClient = idClient;
+	}
 
 	public String getNom() {
 		return nom;
@@ -132,10 +140,10 @@ public class Abonne {
 				this.numeroCarteBancaire = resultat.getString("numCB");
 				
 				String naissanceStr = resultat.getString("dateNaissance");
-				this.dateDeNaissance = Interface.convDateFormat(naissanceStr);
+				this.dateDeNaissance = inter.convDateSQLToJAVA(naissanceStr);
 				
 				String abonnementStr = resultat.getString("dateAbonnement");
-				this.dateDAbonnement = Interface.convDateFormat(abonnementStr);
+				this.dateDAbonnement = inter.convDateSQLToJAVA(abonnementStr);
 		
 				this.codeSecret= resultat.getString("codeSecret");
 			}
@@ -156,29 +164,29 @@ public class Abonne {
 		System.out.println( "Veuillez entrer votre: ");
 		
 		System.out.println( "nom: ");
-		this.nom = Interface.demandeString();
+		this.nom = inter.demandeString();
 		
 		System.out.println( "prénom: ");
-		this.prenom = Interface.demandeString();
+		this.prenom = inter.demandeString();
 		
 		System.out.println( "N° de CB: ");
-		this.numeroCarteBancaire = Interface.demandeCarteBancaire();
+		this.numeroCarteBancaire = inter.demandeCarteBancaire();
 		
 		System.out.println( "Date de naissance: ");
-		this.dateDeNaissance = Interface.demandeDate();
+		this.dateDeNaissance = inter.demandeDate();
 		String dateDeNaissanceVal = "2000-01-01 00:00:00";
 		
 		System.out.println( "Sexe [F,H]: ");
-		this.sexe = Interface.demandeSexe();
+		this.sexe = inter.demandeSexe();
 		String sexeVal;
 		if (this.sexe == Sexe.H) sexeVal = "h"; else sexeVal = "f";
 		
 		System.out.println( "Définir un code secret: ");
 		
-		this.codeSecret = Interface.demandeCodeSecret();
+		this.codeSecret = inter.demandeCodeSecret();
 		System.out.println( "");
 		
-		this.dateDAbonnement = Interface.now();
+		this.dateDAbonnement = inter.now();
 		String dateDAbonnement = "2000-01-01 00:00:00";
 		
 			

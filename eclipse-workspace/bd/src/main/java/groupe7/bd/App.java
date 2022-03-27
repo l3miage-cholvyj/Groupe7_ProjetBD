@@ -9,6 +9,8 @@ import javax.persistence.Persistence;
 
 import groupe7.bd.utils.TheConnection;
 
+import groupe7.bd.Interface;
+
 
 /*
  * COVENTION DE NOMAGE DES FONCTIONS
@@ -39,12 +41,12 @@ System.out.println("prenom: " + resultatTestSql.getString("prenom"));
 */
 
 public class App {
-
+	static Interface inter;//Permet d'accer au fonction de l'interface
 	
 	/*
 	 * Etablie une connextion vers une base de donnée local
 	 */
-	public static Connection ConnectionBD(String url,String user,String password) {
+	public Connection ConnectionBD(String url,String user,String password) {
 		try {
 	    	Connection con = DriverManager.getConnection(url,user,password);
 	    	System.out.println( "Connexion Succes" );
@@ -60,11 +62,11 @@ public class App {
 	//--MAIN--
 	public static void main( String[] args ) throws SQLException
     {
-
 		System.out.println("START vePick ");
 		Connection conn=TheConnection.getInstance();
 
-		Interface.Interface(0);
+		inter = new Interface();
+		inter.Interface(0);
 
 			// traitement d'exception
 		 

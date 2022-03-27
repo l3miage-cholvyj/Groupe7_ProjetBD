@@ -39,7 +39,7 @@ System.out.println("prenom: " + resultatTestSql.getString("prenom"));
 
 public class App2 {
 
-	
+	static Interface inter;//Permet d'accer au fonction de l'interface
 	/*
 	 * Etablie une connextion vers une base de donnée local
 	 */
@@ -89,7 +89,7 @@ public class App2 {
         	*/
         	
         	//--- Lance l'interface Textuelle ---
-        	Interface.Interface(0);
+        	inter.Interface(0);
         	//---
         	
     	}

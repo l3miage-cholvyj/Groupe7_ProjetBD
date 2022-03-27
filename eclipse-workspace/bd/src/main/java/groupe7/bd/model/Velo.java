@@ -13,6 +13,7 @@ public class Velo {
 	//Attributs
 	Interface inter;//Permet d'accer au fonction de l'interface
 	private int idVelo;
+	private int idBornette;
 	private Model modeleVelo;
 	private Etat etat;
 	private Date dateMeS;
@@ -22,7 +23,7 @@ public class Velo {
 		this.idVelo = 0;
 		this.modeleVelo = Model.Manuel;
 		this.etat = Etat.Ok;
-		this.dateMeS = Interface.dateStrConv("01/01/0000 00:00:00.00");
+		this.dateMeS = inter.dateStrConv("01/01/0000 00:00:00.00");
 	}
 	
 	public Velo(int idVelo, Model modeleVelo, Etat etat, Date dateMeS) {
@@ -39,6 +40,14 @@ public class Velo {
 	
 	public void setIdVelo(int idVelo) {
 		this.idVelo = idVelo;
+	}
+	
+	public int getIdBornette() {
+		return idBornette;
+	}
+	
+	public void setIdBornette(int idBornette) {
+		this.idBornette = idBornette;
 	}
 
 	public Model getModeleVelo() {
