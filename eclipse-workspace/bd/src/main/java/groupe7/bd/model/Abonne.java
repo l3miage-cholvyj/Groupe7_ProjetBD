@@ -134,8 +134,8 @@ public class Abonne {
 				this.prenom = resultat.getString("prenom");
 				
 				String sexeVal = resultat.getString("sexe");
-				if (sexeVal == "h") this.sexe = Sexe.H;
-				else this.sexe = Sexe.F;
+				System.out.println("->"+sexeVal);
+				if (sexeVal.charAt(0) == 'h') this.sexe = Sexe.H; else this.sexe = Sexe.F;
 				
 				this.numeroCarteBancaire = resultat.getString("numCB");
 				
@@ -147,9 +147,6 @@ public class Abonne {
 		
 				this.codeSecret= resultat.getString("codeSecret");
 			}
-			//fermeture des descripteurs 
-			requete.close();
-			resultat.close();
 				
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -177,7 +174,7 @@ public class Abonne {
 		
 		System.out.println( "Date de naissance: ");
 		this.dateDeNaissance = inter.demandeDate();
-		String dateDeNaissanceVal = "2000-01-01 00:00:00";
+		String dateDeNaissanceSQL = inter.convDateJAVAToSQL(this.dateDeNaissance);
 		
 		System.out.println( "Sexe [F,H]: ");
 		this.sexe = inter.demandeSexe();
@@ -190,9 +187,9 @@ public class Abonne {
 		System.out.println( "");
 		
 		this.dateDAbonnement = inter.now();
-		String dateDAbonnement = "2000-01-01 00:00:00";
+		System.out.print(dateDAbonnement);
+		String dateDAbonnementSQL = inter.convDateJAVAToSQL(this.dateDAbonnement);
 		
-			
 		System.out.println( "Félicitaions vous êtes abonnèes");
 		System.out.println( "");
 		
@@ -217,7 +214,7 @@ public class Abonne {
 			
 			//Sql commande new abonne
 			sqlCommad = "INSERT INTO Abonne (idClient,nom,prenom,dateNaissance,sexe,dateAbonnement,codeSecret) VALUES ("
-			+idClient+",'"+this.nom+"','"+this.prenom+"','"+dateDeNaissanceVal+"','"+sexeVal+"','"+dateDAbonnement+"','"+this.codeSecret+"')";
+			+idClient+",'"+this.nom+"','"+this.prenom+"','"+dateDeNaissanceSQL+"','"+sexeVal+"','"+dateDAbonnementSQL+"','"+this.codeSecret+"')";
 			stmt = conn.createStatement();
 			//Statement stmt = conn.prepareStatement(sqlCommad, Statement.RETURN_GENERATED_KEYS);
 			stmt.executeUpdate(sqlCommad);
@@ -230,9 +227,6 @@ public class Abonne {
 			while (resultat.next()) {
 				this.idAbonne = resultat.getInt("id");
 			}
-			//fermeture des descripteurs 
-			requete.close();
-			resultat.close();
 			
 			//System.out.println("-<"+this.idAbonne+"/"+this.idClient);
 			
@@ -315,9 +309,6 @@ public class Abonne {
 				location = new Location();
 				location.shownLocationIdLocations();
 			}
-			//fermeture des descripteurs 
-			requete.close();
-			resultat.close();
 		}
 		catch (SQLException e){
 			System.out.println("SQL Erreur");
@@ -345,9 +336,6 @@ public class Abonne {
 			while (resultat.next()) {
 				nbLocation = resultat.getInt("nbLocations");
 			}
-			//fermeture des descripteurs 
-			requete.close();
-			resultat.close();
 			return nbLocation;
 		}
 		catch (SQLException e){
@@ -383,9 +371,7 @@ public class Abonne {
 			}
 			
 			location.shownLocationIdLocations();
-			//fermeture des descripteurs 
-			requete.close();
-			resultat.close();
+			
 			return location;
 			
 		}
@@ -418,9 +404,6 @@ public class Abonne {
 				location = new Location();
 				location.shownLocationIdLocations();
 			}
-			//fermeture des descripteurs 
-			requete.close();
-			resultat.close();
 			
 		}
 		catch (SQLException e){

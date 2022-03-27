@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 import groupe7.bd.model.*;
 import groupe7.bd.utils.TheConnection;
@@ -226,7 +229,11 @@ public class Interface {
 	 * Convertie une date JAVA au format date SQL
 	*/
 	public static String convDateJAVAToSQL(Date dateJava) {
-		return "2022-01-01 00:00:00";
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.00");    
+		String dateToStr = dateFormat.format(dateJava);
+		return dateToStr;
+		
 	}
 	
 	/*
@@ -256,7 +263,7 @@ public class Interface {
 		char s1 = dateStr.charAt(17);
 		char s2 = dateStr.charAt(18);
 		
-		return dateStrConv(j1+""+j2+"/"+m1+m2+"/"+a1+a2+a3+a4+h1+h2+":"+mm1+mm2+":"+s1+s2+".00");
+		return dateStrConv(j1+""+j2+"/"+m1+m2+"/"+a1+a2+a3+a4+" "+h1+h2+":"+mm1+mm2+":"+s1+s2+".00");
 	}
 	
 	
@@ -282,19 +289,19 @@ public class Interface {
 	 * Renvoie la date et l'heure du jour. 
 	*/
 	public static Date now() {
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat();
-		SimpleDateFormat sdf1 = new SimpleDateFormat();
-	    sdf1.applyPattern("dd/MM/yyyy HH:mm:ss.SS");
-	    String strDate = sdf.format(cal.getTime());
-	    Date dateDuJour;
 		try {
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf1 = new SimpleDateFormat();
+			sdf1.applyPattern("dd/MM/yyyy HH:mm:ss.SS");
+			String strDate = sdf1.format(cal.getTime());
+			Date dateDuJour;
 			dateDuJour = sdf1.parse(strDate);
+			return dateDuJour;
 		} catch (ParseException e) {
 			return null;
 			//e.printStackTrace();
 		}
-	    return dateDuJour;
+	    
 		
 	}
 	
