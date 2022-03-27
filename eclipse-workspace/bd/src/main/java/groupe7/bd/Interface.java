@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -229,45 +230,22 @@ public class Interface {
 	 * Convertie une date JAVA au format date SQL
 	*/
 	public static String convDateJAVAToSQL(Date dateJava) {
-		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.00");    
-		String dateToStr = dateFormat.format(dateJava);
-		return dateToStr;
-		
+		SimpleDateFormat SQL_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return SQL_format.format(dateJava);
 	}
 	
 	/*
 	 * Convertie une date SQL au format date JAVA
 	*/
 	public static Date convDateSQLToJAVA(String dateStr) {
-		if (dateStr == null) {
-			return null;
-		}
-		
 		//Patherne SQL: AAAA-MM-JJ hh:mm:ss
 		//Patherne JAVA: dd/MM/yyyy HH:mm:ss.SS
-		
-		char a1 = dateStr.charAt(0);
-		char a2 = dateStr.charAt(1);
-		char a3 = dateStr.charAt(2);
-		char a4 = dateStr.charAt(3);
-		
-		char m1 = dateStr.charAt(5);
-		char m2 = dateStr.charAt(6);
-		
-		char j1 = dateStr.charAt(8);
-		char j2 = dateStr.charAt(9);
-		
-		char h1 = dateStr.charAt(11);
-		char h2 = dateStr.charAt(12);
-		
-		char mm1 = dateStr.charAt(14);
-		char mm2 = dateStr.charAt(15);
-		
-		char s1 = dateStr.charAt(17);
-		char s2 = dateStr.charAt(18);
-		
-		return dateStrConv(j1+""+j2+"/"+m1+m2+"/"+a1+a2+a3+a4+" "+h1+h2+":"+mm1+mm2+":"+s1+s2+".00");
+		try{
+			return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(SQL_date);
+		}
+        catch(Exception e){
+			return null;
+		}
 	}
 	
 	
@@ -276,17 +254,12 @@ public class Interface {
 	 * et la retourne.
 	*/
 	public static Date dateStrConv(String dateStr) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
-		//System.out.println("->"+dateStr);
-		Date date;
-		try {
-			date = sdf.parse(dateStr);
-		} 
-		catch (ParseException e) {
-			return null;
-			//e.printStackTrace();
+		try{
+			return new SimpleDateFormat("dd/MM/yyyy").parse(dateStr);
 		}
-	    return date;
+        catch(Exception e){
+			return null;
+		}
 	}
 	
 	/*
