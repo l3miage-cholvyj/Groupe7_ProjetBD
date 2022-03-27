@@ -300,14 +300,14 @@ public class Location {
 	 * et le retourne
 	 * */
 	public int calculNbVelo() {
-		int nbVelo = 0;
+		int nbVelo = -1;
 		
 		//SQL
 		Connection conn=TheConnection.getInstance();
 		java.sql.Statement requete;
 		
 		//Sql commande
-		String sqlCommad = "SELECT COUNT(*) FROM LocationsDetail WHERE (idLocations = "+this.idLocations+");";
+		String sqlCommad = "SELECT COUNT(*) AS nbVelo FROM LocationsDetail WHERE (idLocations = "+this.idLocations+" and fini = 0);";
 		try {
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommad);
@@ -317,7 +317,8 @@ public class Location {
 			return nbVelo;
 		}
 		catch (SQLException e){
-			return nbVelo;
+			e.printStackTrace();
+			return -1;
 		}
 	}
 	
@@ -367,7 +368,35 @@ public class Location {
 			Connection conn=TheConnection.getInstance();
 					
 			//Sql commande new Locations
-			String sqlCommad = "UPDATE LocationsDetail SET fin = "+sousLocation.getFinSQL()+" WHERE (idLocationsDetail = "+sousLocation.getIdLocationsDetails()+")";
+			String sqlCommad = "UPDATE LocationsDetail SET fin = '"+sousLocation.getFinSQL()+"', fini = 1 WHERE (idLocationsDetail = "+sousLocation.getIdLocationsDetails()+")";
+			Statement stmt = conn.createStatement();
+							
+			stmt.executeUpdate(sqlCommad);
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/*
+	 * [Java]
+	 * Fixe à fin la location Courante
+	 * 
+	 * [Sql]
+	 * 1) Mettre à jour la location dans la base de donnè
+	 * 
+	 * */
+	public void editLocationsEnd() {
+		//JAVA
+		this.fini =true;
+		
+		//Sql
+		try {
+			Connection conn=TheConnection.getInstance();
+					
+			//Sql commande new Locations
+			String sqlCommad = "UPDATE Locations SET fini = 1 WHERE (idLocations = "+this.idLocations+")";
 			Statement stmt = conn.createStatement();
 							
 			stmt.executeUpdate(sqlCommad);

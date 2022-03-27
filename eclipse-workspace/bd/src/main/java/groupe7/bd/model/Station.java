@@ -130,26 +130,26 @@ public class Station {
 	 *
 	 */
 	public int getFirstIdBornetteLibre() {
-		int idBornette = 0;
+		int idBornette = -1;
 
 		//SQL
 		Connection conn=TheConnection.getInstance();
 		java.sql.Statement requete;
 		
 		//Sql commande
-		String sqlCommad = "SELECT * FROM Velo RIGHT JOIN Bornette USING (idBornette) WHERE (idStation = "+this.idStation+" and etatBornette = 'ok' and idVelo is  NULL) LIMIT 1";
+		String sqlCommad = "SELECT * FROM Velo RIGHT JOIN Bornette USING (idBornette) WHERE (idStation = "+this.idStation+" and etatBornette = 'ok' and idVelo is NULL) LIMIT 1";
 		try {
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommad);
 			while (resultat.next()) {
-				idBornette = resultat.getInt(idBornette);
+				idBornette = resultat.getInt("idBornette");
 			}
 			return idBornette;
 			
 		} 
 		catch (SQLException e) {
-			return 0;
-			//e.printStackTrace();
+			e.printStackTrace();
+			return -1;
 		}
 	}
 
