@@ -64,6 +64,9 @@ public class Bornette {
 				else
 				this.etatBornette=Etat.Ok;
 			}
+			//fermeture des descripteurs 
+			requete.close();
+			resultat.close();
 				
 		}catch (SQLException e) {
 			e.printStackTrace();
