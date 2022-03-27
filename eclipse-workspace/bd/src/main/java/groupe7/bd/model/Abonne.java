@@ -129,6 +129,8 @@ public class Abonne {
 				//JAVA
 				this.idAbonne = resultat.getInt("idAbonne");
 				
+				this.idClient = resultat.getInt("idClient");
+				
 				this.nom = resultat.getString("nom");
 				
 				this.prenom = resultat.getString("prenom");
@@ -297,7 +299,8 @@ public class Abonne {
 		java.sql.Statement requete;
 				
 		//Sql commande
-		String sqlCommad = "SELECT * FROM Locations;";
+		//System.out.println("->"+this.idClient);
+		String sqlCommad = "SELECT * FROM Locations WHERE (idClient = "+this.idClient+");";
 		try {
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommad);
@@ -305,13 +308,15 @@ public class Abonne {
 			Location location;
 					
 			while (resultat.next()) {
-				System.out.println("Location N° "+resultat.getInt("IdLocations")+":");
 				location = new Location();
+				location.loadLocationIdLocations(resultat.getInt("IdLocations"));
+				System.out.println("+------+");
 				location.shownLocationIdLocations();
+				System.out.println("+-----+");
 			}
 		}
 		catch (SQLException e){
-			System.out.println("SQL Erreur");
+			e.printStackTrace();
 		}
 		
 	}

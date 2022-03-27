@@ -53,10 +53,10 @@ public class Interface {
 				java.sql.Statement requete;
 			
 				requete = conn.createStatement();
-				ResultSet resultat = requete.executeQuery("SELECT * FROM Station WHERE statu = vplus");
+				ResultSet resultat = requete.executeQuery("SELECT * FROM Station WHERE statu = 'vplus'");
 				int index = 1;
 				while(resultat.next()){
-					System.out.println("("+index+")-> Station N°"+resultat.getString("idStation")+" "+resultat.getString("adresse"));
+					System.out.println("\tStation N°"+resultat.getString("idStation")+" "+resultat.getString("adresse"));
 					index++;
 				}
 			} catch (SQLException e) {
@@ -74,10 +74,10 @@ public class Interface {
 				java.sql.Statement requete;
 			
 				requete = conn.createStatement();
-				ResultSet resultat = requete.executeQuery("SELECT * FROM Station WHERE statu = vmoins");
+				ResultSet resultat = requete.executeQuery("SELECT * FROM Station WHERE statu = 'vmoins'");
 				int index = 1;
 				while(resultat.next()){
-					System.out.println("("+index+")-> Station N°"+resultat.getString("idStation")+" "+resultat.getString("adresse"));
+					System.out.println("\tStation N°"+resultat.getString("idStation")+" "+resultat.getString("adresse"));
 					index++;
 				}
 			} catch (SQLException e) {
@@ -240,6 +240,10 @@ public class Interface {
 	 * Convertie une date SQL au format date JAVA
 	*/
 	public static Date convDateSQLToJAVA(String dateStr) {
+		if (dateStr == null) {
+			return null;
+		}
+		
 		//Patherne SQL: AAAA-MM-JJ hh:mm:ss
 		//Patherne JAVA: dd/MM/yyyy HH:mm:ss.SS
 		

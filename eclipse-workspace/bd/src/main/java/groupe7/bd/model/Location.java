@@ -99,13 +99,17 @@ public class Location {
 			java.sql.Statement requete;
 			
 			//Sql commande
-			String sqlCommad = "SELECT * FROM Locations  WHERE (idLocation = "+idLocations+")";
+			String sqlCommad = "SELECT * FROM Locations  WHERE (idLocations = "+idLocations+")";
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommad);
 			while (resultat.next()) {
 				//JAVA
 				this.idLocations = resultat.getInt("idLocations");
 				this.codeSecret = resultat.getString("codeSecret");
+				this.prix = resultat.getDouble("prix");
+				this.fini = resultat.getBoolean("fini");
+				loadLocationAllVelo(); // velos
+				
 			}
 				
 		}catch (SQLException e) {
@@ -119,10 +123,13 @@ public class Location {
 	 */
 	public void shownLocationIdLocations() {
 		System.out.println("Location N°"+this.idLocations);
-		for (LocationsDetail LocatationDetail : velos) LocatationDetail.ShowLocation();
 		System.out.println("codeSecret: "+this.codeSecret);
 		System.out.println("prix: "+this.prix);
 		System.out.println("fini :"+this.fini);
+		System.out.println("***");
+		for (LocationsDetail LocatationDetail : velos) LocatationDetail.ShowLocation();
+		System.out.println("***");
+		
 	}
 	
 	
@@ -272,12 +279,14 @@ public class Location {
 		java.sql.Statement requete;
 				
 		//Sql commande
-		String sqlCommad = "SELECT COUNT(*) FROM Locations WHERE (codeSecret = "+codeSecret+");";
+		String sqlCommad = "SELECT * FROM LocationsDetail WHERE (idLocations = "+idLocations+");";
 		try {
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommad);
 			while (resultat.next()) {
-									
+				LocationsDetail location = new LocationsDetail();
+				location.loadLocationIdLocations(resultat.getInt("idLocationsDetail"));
+				this.velos.add(location);
 			}
 		}
 		catch (SQLException e){

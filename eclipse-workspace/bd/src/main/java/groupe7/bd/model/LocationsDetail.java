@@ -121,14 +121,14 @@ public class LocationsDetail {
 	 * Met à jour les valeur de l'objet courant
 	 */
 	public void loadLocationIdLocations(int idLocationsDetail) {
-		
+		int b;
 		try {
 			//SQL
 			Connection conn=TheConnection.getInstance();
 			java.sql.Statement requete;
 			
 			//Sql commande
-			String sqlCommad = "SELECT * FROM LocationsDetail  WHERE (idLocationsDetails = "+idLocationsDetail+")";
+			String sqlCommad = "SELECT * FROM LocationsDetail  WHERE (idLocationsDetail = "+idLocationsDetail+")";
 			requete = conn.createStatement();
 			ResultSet resultat = requete.executeQuery(sqlCommad);
 			while (resultat.next()) {
@@ -146,7 +146,9 @@ public class LocationsDetail {
 				String fin = resultat.getString("fin");
 				this.fin = inter.convDateSQLToJAVA(fin);
 				
-				this.fini = resultat.getBoolean("fini");
+				b =  resultat.getInt("fini");
+				if (b == 1) this.fini = true; else this.fini = false; 
+				
 			}
 				
 		}catch (SQLException e) {
