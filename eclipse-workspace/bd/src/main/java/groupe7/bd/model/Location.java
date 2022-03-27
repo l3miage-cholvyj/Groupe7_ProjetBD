@@ -148,8 +148,7 @@ public class Location {
 		this.codeSecret = codeSecret;
 		
 		//numCB
-		Client clientAnnonyme = new Client();
-		clientAnnonyme.setNumeroCarteBancaire(numCB);
+		Client clientAnnonyme = new Client(0,numCB);
 		
 		//[Sql]
 		try {

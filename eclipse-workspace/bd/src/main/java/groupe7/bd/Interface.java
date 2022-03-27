@@ -453,6 +453,7 @@ public class Interface {
 		//Teste nom et codeSecret
 		abonneCourant = new Abonne(); // Crée une instance Abonne "vide"
 		abonneCourant.loadAbonne(nomAbonne,codeSecretAbonne); // LOAD les valeur de l'abonneCourant
+		clientCourant = new Client(abonneCourant.getIdClient(),abonneCourant.getNumeroCarteBancaire());
 		//ECHEC mauvais nom ou codeSecret
 		if (abonneCourant.getNom() == null) {
 			System.out.println("Echec de la connexion");
@@ -478,6 +479,7 @@ public class Interface {
 		System.out.println( "---------------------------------" );
 		abonneCourant = new Abonne(); // Crée une instance Abonne "vide"
 		abonneCourant.SaveNewAbonne(); // Crée et enregistre le nouvelle abonèe
+		clientCourant = new Client(abonneCourant.getIdClient(),abonneCourant.getNumeroCarteBancaire());
 		Interface(10);
 	}
 	
@@ -521,7 +523,7 @@ public class Interface {
 	 */
 	public  void InterfaceP16() {
 		System.out.println( "---------------------------------" );
-		abonneCourant.showHistorique();
+		clientCourant.showHistorique();
 		
 		attentAppuieTouche();
 		Interface(10);
@@ -653,8 +655,8 @@ public class Interface {
 	public  void InterfaceP30() {
 		System.out.println( "---------------------------------" );
 		System.out.println( "Bonjour "+abonneCourant.getNom()+" "+abonneCourant.getPrenom());
-		if (abonneCourant.calculNbLocation() == 1) { 
-			locationCourante = abonneCourant.getLocation(0);
+		if (clientCourant.calculNbLocationEnCours() == 1) { 
+			locationCourante = clientCourant.getLocation(1);
 			Interface(34);
 		}
 		else Interface(33);
@@ -691,12 +693,12 @@ public class Interface {
 	
 	//Choix de location
 	public  void InterfaceP33() {
-		abonneCourant.showLocation();
+		clientCourant.showEnCours();
 		System.out.println( "---------------------------------" );
 		System.out.println( "Veuillez choisir votre location:");
-		int nbLocations = abonneCourant.calculNbLocation();
+		int nbLocations = clientCourant.calculNbLocationEnCours();
 		int indexLocation = demandeInt(1,nbLocations);
-		locationCourante = abonneCourant.getLocation(indexLocation-1);
+		locationCourante =  clientCourant.getLocation(indexLocation);
 		Interface(34);
 	}
 		
@@ -734,7 +736,7 @@ public class Interface {
 		
 	//Stop Locations
 	public  void InterfaceP36() {
-		if (abonneCourant.calculNbLocation() > 0) {
+		if (clientCourant.calculNbLocationEnCours() > 0) {
 			System.out.println( "---------------------------------" );
 			//locationCourante.editSplitLocation();
 			locationCourante.calculPrixLocations();
