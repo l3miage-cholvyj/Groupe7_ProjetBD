@@ -147,6 +147,9 @@ public class Abonne {
 		
 				this.codeSecret= resultat.getString("codeSecret");
 			}
+			//fermeture des descripteurs 
+			requete.close();
+			resultat.close();
 				
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -227,6 +230,9 @@ public class Abonne {
 			while (resultat.next()) {
 				this.idAbonne = resultat.getInt("id");
 			}
+			//fermeture des descripteurs 
+			requete.close();
+			resultat.close();
 			
 			//System.out.println("-<"+this.idAbonne+"/"+this.idClient);
 			
@@ -309,6 +315,9 @@ public class Abonne {
 				location = new Location();
 				location.shownLocationIdLocations();
 			}
+			//fermeture des descripteurs 
+			requete.close();
+			resultat.close();
 		}
 		catch (SQLException e){
 			System.out.println("SQL Erreur");
@@ -336,6 +345,9 @@ public class Abonne {
 			while (resultat.next()) {
 				nbLocation = resultat.getInt("nbLocations");
 			}
+			//fermeture des descripteurs 
+			requete.close();
+			resultat.close();
 			return nbLocation;
 		}
 		catch (SQLException e){
@@ -371,7 +383,9 @@ public class Abonne {
 			}
 			
 			location.shownLocationIdLocations();
-			
+			//fermeture des descripteurs 
+			requete.close();
+			resultat.close();
 			return location;
 			
 		}
@@ -404,6 +418,9 @@ public class Abonne {
 				location = new Location();
 				location.shownLocationIdLocations();
 			}
+			//fermeture des descripteurs 
+			requete.close();
+			resultat.close();
 			
 		}
 		catch (SQLException e){
